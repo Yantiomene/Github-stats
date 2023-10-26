@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <h1>Welcome {{ username }} :)</h1></br>
+    <h2>Search for a Github Username</h2>
+    <form method="POST" class="mt-4">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.search_query(class="form-control", placeholder="Enter a Github username") }}
+      </di>
+      <button type="submit">Search</button>
+    </form>
+    </br></br>
+    <h2>Recent Searches</h2>
+    {% if recent_searches %}
+    <div class="row">
+      {% for search in recent_searches %}
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <img src="{{ search.image }}" class="card-img-top" alt="{{ search.search_query }} Dashboard">
+          <div class="card-body">
+            <h5 class="card-title">GitHub Username: {{ search.search_query }}</h5>
+            <p class="card-text">Date: {{ search.timestamp }}</p>
+            <a href="{{ url_for('view_dashboard', username=search.search_query) }}" class="btn btn-primary">View Dashboard</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No recent search, let's start with our first query: Enter a Github username</p>
+    {% endif %}
+  </div>
+{% endblock %}
