@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 .vscode/
 __pycache__/
+=======
+venv/
+__pycache__/
+>>>>>>> main
