@@ -18,6 +18,7 @@ login.login_view = 'login'
 
 from app import routes
 from app.models.user import User
+from app.models.search import Search
 
 
 @login.user_loader
