@@ -1,12 +1,19 @@
 import React from 'react';
+import './authPage.css';
 
-import AuthCard from '../components/authCard'
+import Histograph from '../components/histograph';
+import AuthCard from '../components/authCard';
+
 
 const AuthPage = () => {
     return (
-        <div>
-            <h1>Login</h1>
-            <AuthCard />
+        <div id='login-page'>
+            <div className='left-half'>
+                <Histograph />
+            </div>
+            <div className='right-half'>
+                <AuthCard />
+            </div>
         </div>
     )
 }
