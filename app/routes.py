@@ -4,7 +4,14 @@ from app import app, db
 from app.forms import RegistrationForm, LoginForm, SearchForm
 from app.models.user import User
 from app.models.search import Search
+from app.models.github_data import GithubData
 from flask_login import current_user, login_user, login_required, logout_user
+from os import getenv
+from app.get_act_calendar import get_github_user_activity
+from app.get_user_info import get_github_user_info
+from app.get_repos import get_github_repositories_info
+from app.get_skills import get_github_user_skills
+import json
 
     
 @app.route('/', strict_slashes=False)
@@ -69,8 +76,8 @@ def logout():
 def search():
     form = SearchForm()
     if form.validate_on_submit():
-        search_query = form.search_query.data
-        return redirect(url_for('view_dashboard', username=search_query))
+        gh_username = form.gh_username.data
+        return redirect(url_for('view_dashboard', username=gh_username))
 
     # Retrieve the 5 most recent searches for the current user
     recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(5).all()
@@ -84,10 +91,59 @@ def search():
 def view_dashboard(username):
     #the data for this user should be query and store in the database
     #or to build the dashbord directly and serve it to the user.
-    #a snap of the dashbord should be taken and the save in the searches table
+    #a snap of the dashbord should be taken and saved in the searches table
     # Save the search record to the database
-    #search_record = Search(user_id=current_user.id, search_query=search_query, image='path/to/snapshot.png')
-    #db.session.add(search_record)
-    #db.session.commit()
+
+    access_token = getenv('GH_TOKEN')
+
+    #get user info
+    github_user_info = get_github_user_info(username, access_token)
+    if not github_user_info:
+        flash('No Github user found with the username: {}'.format(username), 'warning')
+        return redirect(url_for('search'))
+
+    #get user activities info
+    repositories_info = get_github_repositories_info(username, access_token)
+    user_skills = get_github_user_skills(username, access_token)
+    user_activity = get_github_user_activity(username, access_token)
+
+    # Create or update the GithubData record
+    github_data_record = GithubData.query.filter_by(user_id=current_user.id, github_username=username).first()
+    if github_data_record is None:
+        github_data_record = GithubData(
+            user_id=current_user.id,
+            github_username = username,
+            github_user=json.dumps(github_user_info),
+            repositories=json.dumps(repositories_info),
+            activities=json.dumps(user_activity),
+            skills=json.dumps(user_skills)
+        )
+        db.session.add(github_data_record)
+    else:
+        github_data_record.github_user = json.dumps(github_user_info)
+        github_data_record.repositories = json.dumps(repositories_info)
+        github_data_record.activities = json.dumps(user_activity)
+        github_data_record.skills = json.dumps(user_skills)
+
+    # Check if there is already a record in the searches table
+    search_record = Search.query.filter_by(user_id=current_user.id, gh_username=username).first()
+
+    if search_record is None:
+        # If there is no search record for this username, create a new one
+        search_record = Search(
+            user_id=current_user.id,
+            gh_username=username,
+            avatar_url=github_user_info['avatar'],
+            commits_count=user_activity['totalCommitContributions'],
+            repos_count = len(repositories_info)
+        )
+        db.session.add(search_record)
+    else:
+         search_record.gh_username = username
+         search_record.avatar_url = github_user_info['avatar']
+         search_record.commits_count = user_activity['totalCommitContributions']
+         search_record.repos_count = len(repositories_info)
+
+    db.session.commit()
 
     return render_template('dashboard.html', username=username)
