@@ -6,7 +6,7 @@
     <form method="POST" class="mt-4">
       {{ form.hidden_tag() }}
       <div class="form-group">
-        {{ form.search_query(class="form-control", placeholder="Enter a Github username") }}
+        {{ form.gh_username(class="form-control", placeholder="Enter a Github username") }}
       </di>
       <button type="submit">Search</button>
     </form>
@@ -17,11 +17,13 @@
       {% for search in recent_searches %}
       <div class="col-md-6">
         <div class="card mb-3">
-          <img src="{{ search.image }}" class="card-img-top" alt="{{ search.search_query }} Dashboard">
+          <img src="{{ search.avatar_url }}" class="card-img-top" alt="{{ search.gh_username }} Dashboard">
           <div class="card-body">
-            <h5 class="card-title">GitHub Username: {{ search.search_query }}</h5>
-            <p class="card-text">Date: {{ search.timestamp }}</p>
-            <a href="{{ url_for('view_dashboard', username=search.search_query) }}" class="btn btn-primary">View Dashboard</a>
+            <h5 class="card-title">GitHub Username: {{ search.gh_username }}</h5>
+            <p class="card-text">Search Date: {{ search.timestamp }}</p>
+	    <p class="card-text">{{ search.commits_count }} total commits for the past 365 days</p>
+	    <p class="card-text">{{ search.repos_count }} total repositories</p>
+            <a href="{{ url_for('view_dashboard', username=search.gh_username) }}" class="btn btn-primary">View Dashboard</a>
           </div>
         </div>
       </div>

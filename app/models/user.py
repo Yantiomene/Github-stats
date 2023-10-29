@@ -16,6 +16,9 @@ class User(UserMixin, db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
     active = db.Column(db.Boolean, default=True)
 
+    # Define the relationship with GithubData
+    github_data = db.relationship('GithubData', back_populates='user', uselist=False)
+
     def __init__(self, username, email, password, active=True):
         self.username = username
         self.email = email

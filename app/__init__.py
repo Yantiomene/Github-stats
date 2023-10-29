@@ -19,6 +19,7 @@ login.login_view = 'login'
 from app import routes
 from app.models.user import User
 from app.models.search import Search
+from app.models.github_data import GithubData
 
 
 @login.user_loader

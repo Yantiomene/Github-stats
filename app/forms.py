@@ -19,5 +19,5 @@ class LoginForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    search_query = StringField(validators=[DataRequired(), Length(max=80)])
+    gh_username = StringField(validators=[DataRequired(), Length(max=255)])
     search = SubmitField('Search')
