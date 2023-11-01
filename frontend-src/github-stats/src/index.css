@@ -1,12 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 * {
   box-sizing: border-box;
+  --secondary-color: #61dafb;
+  --primary-color: #282c34;
+  --white: #fff;
+  --grey: #eee;
+  --dark-grey: #333;
+  --light-grey: #ccc;
+  --black: #000;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+
+a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+  color: var(--secondary-color);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+
+h1 {
+  margin: 0;
+}
+
+.button-cta {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--white)!important;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  transition: all 0.2s ease;
+}
+
+.button-cta:hover {
+  background-color: var(--secondary-color);
+  color: var(--white)!important;
+}
+
+.inv {
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+.cta-stroked {
+  border: 2px solid var(--secondary-color);
+  color: var(--secondary-color)!important;
 }

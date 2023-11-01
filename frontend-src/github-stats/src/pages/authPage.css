@@ -1,5 +1,5 @@
 div#login-page {
-    height: 800px;
+    height: 100vh;
     display: flex;
 }
 
@@ -12,7 +12,7 @@ div#login-page {
 }
 
 div#login-page .left-half {
-    background-color: #eee;
+    background-color: var(--primary-color);
     display: block;
     padding: 44px;
 }

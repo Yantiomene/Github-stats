@@ -1,12 +1,13 @@
-import React from 'react';
 import './authPage.css';
 
 import Histograph from '../components/histograph';
 import AuthCard from '../components/authCard';
+import Footer from '../container/footer';
 
 
 const AuthPage = () => {
     return (
+        <>
         <div id='login-page'>
             <div className='left-half'>
                 <Histograph />
@@ -15,6 +16,8 @@ const AuthPage = () => {
                 <AuthCard />
             </div>
         </div>
+        <Footer />
+        </>
     )
 }
 

@@ -1,0 +1,1 @@
+export { default as logo } from './ghs-logo.svg';

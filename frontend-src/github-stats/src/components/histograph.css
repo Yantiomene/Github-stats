@@ -6,18 +6,20 @@
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
-    gap: 5px;
+    gap: 10px;
   }
   
   .bar {
     --bar-max-height: 300px;
     --animation-duration: 8s;
+  
     width: 60px;
     height: var(--bar-max-height);
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px;
 
-    background-color: #aaa;
+    background-color: var(--primary-color);
     animation: grow-up var(--animation-duration) infinite;
+    border: 2px solid var(--secondary-color);
   }
   
   .bar:nth-child(1) {
@@ -26,6 +28,7 @@
   
   .bar:nth-child(2) {
     height: calc(0.6*var(--bar-max-height));
+    background-color: var(--secondary-color);
     animation-delay: 2s;
   }
   

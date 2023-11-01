@@ -1,0 +1,14 @@
+
+.nav-links {
+    list-style: none;
+    display: inline-flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--primary-color);
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+}

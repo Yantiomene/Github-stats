@@ -1,0 +1,42 @@
+.header {
+    width: 100%;
+    height: 80px;
+    padding: 10px 80px;
+    background-color: var(--grey);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner {
+    background-color: var(--primary-color);
+    min-height: 100vh;
+    
+    font-size: calc(10px + 2vmin);
+    text-align: center;
+    color: var(--white);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h1 {
+    font-size: 3rem;
+}
+
+.banner p {
+    font-size: 1.5rem;
+}
+
+.banner .cta {
+    width: 500px;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.banner .button-cta:hover {
+    color: var(--primary-color)!important;
+}

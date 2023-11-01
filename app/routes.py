@@ -64,6 +64,7 @@ def login():
 
     return render_template('login.html', title='Sign In', form=form)
 
+
 @app.route('/logout', strict_slashes=False)
 @login_required
 def logout():
@@ -134,7 +135,7 @@ def view_dashboard(username):
             user_id=current_user.id,
             gh_username=username,
             avatar_url=github_user_info['avatar'],
-            commits_count=user_activity['totalCommitContributions'],
+            commits_count=user_activity.get('totalCommitContributions'),
             repos_count = len(repositories_info)
         )
         db.session.add(search_record)
