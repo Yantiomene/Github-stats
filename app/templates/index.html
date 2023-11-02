@@ -1,7 +1,19 @@
 {% extends "base.html" %} {% block content %}
-<div class="container">
+      <!-- BANNER -->
+      <div class="banner">
+        <h1>Get Deeper Insights About A Developer</h1>
+        <p>A simple app to view Github user stats</p>
+        <span class="cta">
+          <a href="#" class="button-cta cta-stroked"> Learn more </a>
+          <a href="{{ url_for('register') }}" class="button-cta inv">
+            Sign Up
+          </a>
+        </span>
+      </div>
+      <!-- END OF BANNER -->
+<main>
   <h2>Landing Page</h2>
   <!-- Add project description and whaterver here to attrack users -->
   <p>coming soon...</p>
-</div>
+</main>
 {% endblock %}

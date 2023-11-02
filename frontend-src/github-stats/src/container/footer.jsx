@@ -5,11 +5,11 @@ const Footer = () => {
     return (
         <footer className="footer">
             <p>
-            Created with 💖 by <a href='/'>@Yaninthé</a>,{" "}
-                <a href='/'>@esmond-adjei</a>,{" "}
-                <a href='/'>@GHMensah</a>
+            Created with 💖 by <a href={`${githubURL}/yaninth0`}>@Yaninthé</a>,{" "}
+                <a href={`${githubURL}/esmond-adjei`}>@esmond-adjei</a>,{" "}
+                <a href={`${githubURL}/GHMensah`}>@GHMensah</a>
             </p>
-            <span className="text-muted">© 2023 GitHub Stats</span>
+            <span>© 2023 GitHub Stats</span>
         </footer>
     );
 }

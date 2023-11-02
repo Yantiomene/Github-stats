@@ -1,23 +1,69 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register | Your GitHub Stat Web Service</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <!-- Add CSS and other head content here -->
+  </head>
+  <body>
 
-{% block content %}
-    <div class="container">
-        <h2 class="mt-5">Log In</h2>
-        <form method="POST" class="mt-4">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control", placeholder="Enter your username") }}
+  <div id='login-page'>
+        <div class='left-half'>
+        <div class="histo">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        </div>
+
+        <div class='right-half'>
+
+            <div class="auth-card">
+                <h2>Sign in</h2>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.username(class="form-control", placeholder="username") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password(class="form-control", placeholder="password") }}
+                    </div>
+                    <div class="form-check">
+                        {{ form.remember_me(class="form-check-input") }}
+                        {{ form.remember_me.label(class="form-check-label") }}
+                    </div>
+                    <input type="submit" class="button-cta" value='sign in'/>
+                </form>
+                <div class="small-text">
+                    <small>
+                    Do not have an account? <a href="{{ url_for('register') }}">Sign up</a> for free.
+                    </small>
+                </div>
             </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-label") }}
-                {{ form.password(class="form-control", placeholder="Enter your password") }}
-            </div>
-            <div class="form-check">
-                {{ form.remember_me(class="form-check-input") }}
-                {{ form.remember_me.label(class="form-check-label") }}
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">Sign In</button>
-        </form>
+        </div>
+
     </div>
-{% endblock %}
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>
+        Created with 💖 by <a href="https://github.com/yaninth0" target="_blank">@Yaninthé</a>,
+            <a href="https://github.com/esmond-adjei" target="_blank">@esmond-adjei</a>,
+            <a href="https://github.com/GHMensah" target="_blank">@GHMensah</a>
+        </p>
+        <span>© 2023 GitHub Stats</span>
+    </footer>
+      <!-- END OF FOOTER -->
+    </body>
+  </html>
