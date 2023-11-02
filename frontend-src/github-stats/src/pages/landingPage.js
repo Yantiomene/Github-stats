@@ -10,7 +10,7 @@ const LandingPage = () => {
         <Header />
         <div id="landing-page">
             <h1>go to search</h1>
-            <span>&#x2190;</span>
+            <span>&#8594;</span>
             <Link to="/search">Search</Link>
         </div>
         <Footer />
