@@ -3,6 +3,7 @@
     border-radius: 16px;
     margin: 10px;
     padding: 10px;
+    background-color: var(--white);
     /* border: 1px solid var(--light-grey); */
     display: flex;
     justify-content: space-between;
@@ -26,6 +27,7 @@
     border-radius: 100%;
     outline: 4px solid var(--secondary-transparent);
     border: 2px solid var(--secondary-color);
+    animation: beacon 1s ease-in-out infinite alternate;
 }
 
 .snapshot-card__body {
@@ -77,4 +79,14 @@ ul.snapshot-card__text {
 
 .snapshot-card:hover .leave-button {
     opacity: 1;
+}
+
+
+@keyframes beacon {
+    0% {
+        outline-width: 0px
+    }
+    100% {
+        outline-width: 6px
+    }
 }

@@ -26,14 +26,14 @@ const SnapshotCard = () => {
 
       <div className="snapshot-card__body">
         <p className="snapshot-card__text">
-          <span className="big-text">{search.repos_count}</span> total
+          <span className="big-text">{search.repos_count}</span>
           repositories
         </p>
 
         <p className="snapshot-card__text">
           <span className="big-text">{search.commits_count}</span>
           <span>
-            total commits <br />
+            commits <br />
             <span className="small-text">*365 days</span>
           </span>
         </p>

@@ -8,6 +8,7 @@ div.welcome {
     color: var(--white);
     padding: 20px 80px;
     margin: 20px 0;
+    margin-bottom: 100px;
     border-radius: 24px;
     /* width: 500px;
     position: relative;
@@ -15,7 +16,7 @@ div.welcome {
 }
 
 div.recent-searches {
-    background: var(--white);
+    background-color: var(--white);
     padding: 20px;
     margin-top: 100px;
     border-radius: 24px;
@@ -26,4 +27,9 @@ div.recent-searches h1 {
     margin: 0;
     margin-bottom: 20px;
     text-align: center;
+}
+
+div.snapshot__container {
+    display: flex;
+    flex-wrap: wrap;
 }

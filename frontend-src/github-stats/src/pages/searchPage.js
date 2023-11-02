@@ -21,6 +21,9 @@ const SearchPage = () => {
                 <h1>Recent Searches</h1>
                 <div className='snapshot__container'>
                     <SnapshotCard />
+                    <SnapshotCard />
+                    <SnapshotCard />
+                    <SnapshotCard />
                 </div>
             </div>
 
