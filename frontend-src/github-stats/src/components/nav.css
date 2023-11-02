@@ -12,3 +12,7 @@
 .nav-links a:hover {
     color: var(--secondary-color);
 }
+
+.nav-links .cta-stroked {
+    color: var(--primary-color)!important;
+}

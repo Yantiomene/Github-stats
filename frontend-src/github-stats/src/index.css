@@ -3,10 +3,11 @@
 * {
   box-sizing: border-box;
   --secondary-color: #61dafb;
+  --secondary-transparent: #61dafb77;
   --primary-color: #282c34;
   --white: #fff;
   --grey: #eee;
-  --dark-grey: #333;
+  --dark-grey: #575757;
   --light-grey: #ccc;
   --black: #000;
 }
@@ -26,6 +27,7 @@ a {
   text-decoration: none;
   transition: color 0.2s ease;
   color: var(--secondary-color);
+  cursor: pointer;
 }
 
 a:hover {
@@ -58,6 +60,8 @@ h1 {
 }
 
 .cta-stroked {
-  border: 2px solid var(--secondary-color);
+  outline: 2px solid var(--secondary-color);
+  outline-offset: -2px;
   color: var(--secondary-color)!important;
+  background-color: transparent;
 }

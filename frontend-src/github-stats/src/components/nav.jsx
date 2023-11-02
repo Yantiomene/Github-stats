@@ -11,7 +11,7 @@ const Nav = () => {
         <ul className='nav-links'>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/'>About</Link></li>
-            <li><Link to='/sign-in'>Sign in</Link></li>
+            <li><Link to='/sign-in' className='button-cta cta-stroked'>Sign in</Link></li>
             <li><Link to='/sign-up' className='button-cta'>Sign up</Link></li>
         </ul>
     </nav>

@@ -5,12 +5,17 @@ import "./authCard.css";
 const AuthCard = () => {
   const authType = window.location.pathname;
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log("submitting data...", e.target.value);
+  }
+
   if (authType === "/sign-up") {
     return (
       <div className="auth-card">
         <h2>Sign up</h2>
 
-        <form action="/">
+        <form onSubmit={handleSearch}>
           <input type="text" placeholder="username" />
           <input type="text" placeholder="email" />
           <input type="password" placeholder="password" />
@@ -35,7 +40,7 @@ const AuthCard = () => {
       <div className="auth-card">
         <h2>Sign in</h2>
 
-        <form action="/">
+        <form onSubmit={handleSearch}>
           <input type="text" placeholder="username" />
           <input type="password" placeholder="password" />
           <input type="checkbox" id="remember-me" />

@@ -42,7 +42,7 @@ input[type="email"] {
 }
 
 .auth-card input:focus {
-    outline: 2px solid #61dafb77;
+    outline: 2px solid var(--secondary-transparent);
     color: var(--primary-color);
     border: 1px solid var(--secondary-color);
 }
