@@ -1,0 +1,19 @@
+div#login-page {
+    height: 100vh;
+    display: flex;
+}
+
+.left-half,
+.right-half {
+    width: 50%;
+
+    display: flex;
+    justify-content: center;
+}
+
+div#login-page .left-half {
+    background-color: var(--primary-color);
+    display: block;
+    padding: 44px;
+}
+

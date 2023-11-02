@@ -1,36 +1,69 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="container">
-    <h1>Welcome {{ username }} :)</h1></br>
-    <h2>Search for a Github Username</h2>
-    <form method="POST" class="mt-4">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.gh_username(class="form-control", placeholder="Enter a Github username") }}
-      </di>
-      <button type="submit">Search</button>
-    </form>
-    </br></br>
-    <h2>Recent Searches</h2>
-    {% if recent_searches %}
-    <div class="row">
-      {% for search in recent_searches %}
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <img src="{{ search.avatar_url }}" class="card-img-top" alt="{{ search.gh_username }} Dashboard">
-          <div class="card-body">
-            <h5 class="card-title">GitHub Username: {{ search.gh_username }}</h5>
-            <p class="card-text">Search Date: {{ search.timestamp }}</p>
-	    <p class="card-text">{{ search.commits_count }} total commits for the past 365 days</p>
-	    <p class="card-text">{{ search.repos_count }} total repositories</p>
-            <a href="{{ url_for('view_dashboard', username=search.gh_username) }}" class="btn btn-primary">View Dashboard</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+<div id="search-page">
+    <div class='welcome'>
+        <h1>Welcome {{username}} 👋</h1>
+        <p>enjoy digging into the analytics of your github user of interest</p>
     </div>
-    {% else %}
-    <p>No recent search, let's start with our first query: Enter a Github username</p>
-    {% endif %}
-  </div>
+
+
+    <form method="POST" class="search-form">
+      {{ form.hidden_tag() }}
+      {{ form.gh_username(class="search-input", placeholder="Enter a Github username") }}
+      <button type="submit" class="search-button">Search</button>
+    </form>
+
+  
+    <div class='recent-searches'>
+      <h1>Recent Searches</h1>
+      <div class='snapshot__container'>
+            {% if recent_searches %}
+              {% for search in recent_searches %}
+              <div class="snapshot-card">
+
+                <div class="snapshot-card__profile">
+                  <a href="{{ url_for('view_dashboard', username=search.gh_username) }}">
+                    <img
+                      src="{{ search.avatar_url }}"
+                      class="snapshot-card__img-top"
+                      alt="{{ search.gh_username }} Dashboard"
+                      width="100px"
+                    />
+                    <h3 class="snapshot-card__title">{{ search.gh_username }}</h3>
+                  </a>
+                </div>
+
+                <div class="snapshot-card__body">
+                  <p class="snapshot-card__text">
+                    <span class="big-text">{{ search.repos_count }}</span>
+                    repositories
+                  </p>
+          
+                  <p class="snapshot-card__text">
+                    <span class="big-text">{{ search.commits_count }}</span>
+                    <span>
+                      commits <br />
+                      <span class="small-text">*365 days</span>
+                    </span>
+                  </p>
+          
+                  <p class="snapshot-card__text">
+                    Search Date: {{ search.timestamp }}
+                  </p>
+                </div>
+
+                  <a
+                  href="{{ url_for('view_dashboard', username=search.gh_username) }}"
+                  class="button-cta inv leave-button"
+                    >
+                  <span>&#8599;</span>
+                </a>
+              </div>
+              {% endfor %}
+            {% else %}
+            <p>No recent search, let's start with our first query: Enter a Github username</p>
+            {% endif %}
+      </div>
+    </div>
+</div>
 {% endblock %}

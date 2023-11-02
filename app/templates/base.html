@@ -1,43 +1,72 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Your GitHub Stat Web Service</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Add CSS and other head content here -->
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('register') }}">Register</a>
-        </li>
-	{% if not current_user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-        </li>
-	{% endif %}
-	{% if current_user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-        </li>
-	{% endif %}
-      </ul>
-    </div>
-  </nav>
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul>
-        {% for category, message in messages %}
-          <li class="alert alert-{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
-</body>
+<html lang="en">
+  <head>
+    <title>Your GitHub Stat Web Service</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <!-- Add CSS and other head content here -->
+  </head>
+  <body>
+    <header>
+      <!-- NAV -->
+      <nav class="header">
+        <div class="logo">
+          <a href="{{ url_for('index') }}">
+            <img
+              src="{{ url_for('static', filename='images/ghs-logo.svg') }}"
+              alt="logo"
+              width="80"
+            />
+          </a>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#">About</a></li>
+          {% if not current_user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('login') }}" class="button-cta cta-stroked"
+              >Sign in</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('register') }}" class="button-cta">Sign up</a>
+          </li>
+          {% endif %} {% if current_user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('logout') }}">Logout</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- END OF NAV -->
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul>
+      {% for category, message in messages %}
+      <li class="alert alert-{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %} {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>
+        Created with 💖 by <a href="https://github.com/Yantiomene">@Yaninthé</a>,
+        <a href="https://github.com/esmond-adjei">@esmond-adjei</a>,
+        <a href="https://github.com/GHMatrix">@GHMensah</a>
+      </p>
+      <span>© 2023 GitHub Stats</span>
+    </footer>
+    <!-- END OF FOOTER -->
+  </body>
 </html>

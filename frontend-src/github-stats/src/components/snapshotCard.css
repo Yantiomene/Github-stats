@@ -1,0 +1,92 @@
+.snapshot-card {
+    width: 360px;
+    border-radius: 16px;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--white);
+    /* border: 1px solid var(--light-grey); */
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.16);
+
+    position: relative;
+}
+
+.snapshot-card__profile {
+    text-align: center;
+    color: var(--secondary-color);
+    padding: 10px;
+}
+
+.snapshot-card__profile h3 {
+    margin: 0;
+}
+
+.snapshot-card__img-top {
+    width: 100px;
+    border-radius: 100%;
+    outline: 4px solid var(--secondary-transparent);
+    border: 2px solid var(--secondary-color);
+    animation: beacon 1s ease-in-out infinite alternate;
+}
+
+.snapshot-card__body {
+    padding: 10px;
+}
+
+.snapshot-card__text {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    color: var(--dark-grey);
+    align-items: center;
+    border-radius: 8px;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+ul.snapshot-card__text {
+    list-style: none;
+    padding: 0 10px;
+    gap: 10px;
+}
+
+.snapshot-card__text h2 {
+    margin: 0;
+}
+
+.big-text {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    color: var(--light-grey);
+}
+
+
+.leave-button {
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 100px;
+    padding: 10px;
+}
+
+.snapshot-card:hover .leave-button {
+    opacity: 1;
+}
+
+
+@keyframes beacon {
+    0% {
+        outline-width: 0px
+    }
+    100% {
+        outline-width: 6px
+    }
+}

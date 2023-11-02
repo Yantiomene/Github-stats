@@ -1,38 +1,88 @@
-{% extends "base.html" %}
-{% block content %}
-  <div class="container">
-    <h2>Register</h2>
-    <form method="POST" action="{{ url_for('register') }}">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.username.label(class="form-control-label") }}
-        {{ form.username(class="form-control") }}
-        {% for error in form.username.errors %}
-          <span class="text-danger">{{ error }}</span>
-        {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Register | Your GitHub Stat Web Service</title>
+    <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <!-- Add CSS and other head content here -->
+  </head>
+  <body>
+
+  <div id='login-page'>
+    <div class='left-half'>
+      <div class="histo">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
       </div>
-      <div class="form-group">
-        {{ form.email.label(class="form-control-label") }}
-        {{ form.email(class="form-control") }}
-        {% for error in form.email.errors %}
-          <span class="text-danger">{{ error }}</span>
-        {% endfor %}
+    </div>
+    <div class='right-half'>
+      <div class="auth-card">
+        <h2>Sign up</h2>
+
+        <form method="POST" action="{{ url_for('register') }}">
+          {{ form.hidden_tag() }}
+        
+          <div class="form-group">
+            {{ form.username(class="form-control", placeholder="username") }}
+            {% for error in form.username.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.email(class="form-control", placeholder="email") }}
+            {% for error in form.email.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.password(class="form-control", placeholder="password") }}
+            {% for error in form.password.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.confirm_password(class="form-control", placeholder="confirm password") }}
+            {% for error in form.confirm_password.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <input type="submit" class="button-cta" value='sign up'/>
+        </form>
+        <div class="small-text">
+          <small>
+            Already have an account? <a href="{{ url_for('login') }}">Sign in</a>.
+          </small>
+          <br />
+          <small style='font-size: "10px"'>
+            By signing up, you agree to our <a href="#">Terms</a> and
+            <a href="#">Privacy Policy</a>.
+          </small>
+        </div>
       </div>
-      <div class="form-group">
-        {{ form.password.label(class="form-control-label") }}
-        {{ form.password(class="form-control") }}
-        {% for error in form.password.errors %}
-          <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-      </div>
-      <div class="form-group">
-        {{ form.confirm_password.label(class="form-control-label") }}
-        {{ form.confirm_password(class="form-control") }}
-        {% for error in form.confirm_password.errors %}
-          <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-      </div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-  </div>
-{% endblock %}
+    </div>
+</div>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>
+      Created with 💖 by <a href="https://github.com/yaninth0">@Yaninthé</a>,
+          <a href="https://github.com/esmond-adjei">@esmond-adjei</a>,
+          <a href="https://github.com/GHMensah">@GHMensah</a>
+      </p>
+      <span>© 2023 GitHub Stats</span>
+  </footer>
+    <!-- END OF FOOTER -->
+  </body>
+</html>

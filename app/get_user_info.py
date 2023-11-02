@@ -2,13 +2,15 @@ import requests
 from datetime import datetime
 from os import getenv
 
+
 def get_github_user_info(username, access_token):
     # Define the GitHub API URL for the user profile
     api_url = f"https://api.github.com/users/{username}"
 
-    headers = {
-        'Authorization': f'token {access_token}',
-    }
+    # headers = {
+    #     'Authorization': f'token {access_token}',
+    # }
+    headers = None
 
     # Send a GET request to the GitHub API
     response = requests.get(api_url, headers=headers)
@@ -35,7 +37,8 @@ def get_github_user_info(username, access_token):
     else:
         return None
 
-"""if __name__ == "__main__":
+
+if __name__ == "__main__":
     # Replace 'your_username' with the GitHub username you want to query
     username_to_query = "esmond-adjei"
     access_token = getenv('GH_TOKEN')
@@ -48,4 +51,3 @@ def get_github_user_info(username, access_token):
             print(f"{key}: {value}")
     else:
         print(f"The GitHub user '{username_to_query}' does not exist.")
-"""

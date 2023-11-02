@@ -11,8 +11,8 @@ class Search(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     gh_username = db.Column(db.String(255), nullable=False) # username we are quering the dashboard
     avatar_url = db.Column(db.String(255))
-    commits_count = db.Column(db.Integer)
-    repos_count = db.Column(db.Integer)
+    commits_count = db.Column(db.Integer, nullable=True)
+    repos_count = db.Column(db.Integer, nullable=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __init__(self, user_id, gh_username, avatar_url, commits_count, repos_count):

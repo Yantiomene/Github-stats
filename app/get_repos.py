@@ -16,7 +16,8 @@ def fetch_documentation(contents_url, headers):
         content_bytes = base64.b64decode(content_data.get("content"))
         readme_content = content_bytes.decode("utf-8")
         readme_length = len(readme_content)
-        readme_size = len(content_bytes)  # The size may be larger due to Base64 encoding
+        # The size may be larger due to Base64 encoding
+        readme_size = len(content_bytes)
 
         return {"length": readme_length, "size": readme_size}
     else:
@@ -25,12 +26,12 @@ def fetch_documentation(contents_url, headers):
 
 def fetch_languages(languages_url, headers):
     # Define the GitHub API URL for fetching languages used in a repository
-    #api_url = f"https://api.github.com/repos/{repo_name}/languages"
+    # api_url = f"https://api.github.com/repos/{repo_name}/languages"
 
     # Prepare the headers with the access token for authentication
-    #headers = {
+    # headers = {
     #    "Authorization": f"token {access_token}"
-    #}
+    # }
 
     # Send a GET request to the GitHub API
     response = requests.get(languages_url, headers=headers)
@@ -47,16 +48,18 @@ def get_github_repositories_info(username, access_token):
     repositories_info = []
 
     page = 1
-    per_page = 30  # Number of repositories per page (maximum allowed by GitHub)
+    # Number of repositories per page (maximum allowed by GitHub)
+    per_page = 30
 
     while True:
         # Define the GitHub API URL for the user's repositories, including pagination
         api_url = f"https://api.github.com/users/{username}/repos?page={page}&per_page={per_page}"
 
         # Prepare the headers with the access token for authentication
-        headers = {
-            "Authorization": f"token {access_token}"
-        }
+        # headers = {
+        #     "Authorization": f"token {access_token}"
+        # }
+        headers = None
 
         # Send a GET request to the GitHub API
         response = requests.get(api_url, headers=headers)
@@ -65,7 +68,8 @@ def get_github_repositories_info(username, access_token):
         if response.status_code == 200:
             repositories_data = response.json()
 
-            print("Contents_url: ", repositories_data[0].get('contents_url')[:-7] + "README.md")
+            print("Contents_url: ", repositories_data[0].get(
+                'contents_url')[:-7] + "README.md")
             for repo_data in repositories_data:
                 repo_info = {
                     "name": repo_data.get("name"),
@@ -77,11 +81,14 @@ def get_github_repositories_info(username, access_token):
                     "forks": repo_data.get("forks_count"),
                     "stars": repo_data.get("stargazers_count"),
                     "size": repo_data.get("size"),
-                    "languages": fetch_languages(repo_data.get('languages_url'), headers),  # fetch this information separately
-                    "project_type": repo_data.get('topics'),  # You can analyze the repository's content to determine this
+                    # fetch this information separately
+                    "languages": fetch_languages(repo_data.get('languages_url'), headers),
+                    # You can analyze the repository's content to determine this
+                    "project_type": repo_data.get('topics'),
                     "completeness": None,  # Analyze commits for completeness
                     "repo_age": (datetime.now() - datetime.strptime(repo_data.get("created_at"), "%Y-%m-%dT%H:%M:%SZ")).days,
-                    "documentation": fetch_documentation(repo_data.get('contents_url'), headers), # Analyze length/size of README.md
+                    # Analyze length/size of README.md
+                    "documentation": fetch_documentation(repo_data.get('contents_url'), headers),
                     "frameworks": None  # You can analyze the repository's content to determine this
                 }
                 repositories_info.append(repo_info)
@@ -96,14 +103,16 @@ def get_github_repositories_info(username, access_token):
 
     return repositories_info
 
-"""if __name__ == "__main__":
+
+if __name__ == "__main__":
     # Replace 'your_username' with the GitHub username you want to query
     username_to_query = "Yantiomene"
 
     # Replace 'your_access_token' with your GitHub Personal Access Token
     access_token = getenv('GH_TOKEN')
 
-    repositories_info = get_github_repositories_info(username_to_query, access_token)
+    repositories_info = get_github_repositories_info(
+        username_to_query, access_token)
 
     if repositories_info:
         for repo in repositories_info:
@@ -112,5 +121,5 @@ def get_github_repositories_info(username, access_token):
                 print(f"{key}: {value}")
             print("\n\n===============================")
     else:
-        print(f"The GitHub user '{username_to_query}' does not exist or you provided an incorrect access token.")
-"""
+        print(
+            f"The GitHub user '{username_to_query}' does not exist or you provided an incorrect access token.")
