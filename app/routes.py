@@ -1,17 +1,19 @@
 """Defining routes"""
-from flask import render_template, flash, redirect, url_for, request
+from os import getenv
+
+import json
+from flask import render_template, flash, redirect, url_for
+from flask_login import current_user, login_user, login_required, logout_user
+
 from app import app, db
 from app.forms import RegistrationForm, LoginForm, SearchForm
 from app.models.user import User
 from app.models.search import Search
 from app.models.github_data import GithubData
-from flask_login import current_user, login_user, login_required, logout_user
-from os import getenv
 from app.api_service.get_act_calendar import get_github_user_activity
 from app.api_service.get_user_info import get_github_user_info
 from app.api_service.get_repos import get_github_repositories_info
 from app.api_service.get_skills import get_github_user_skills
-import json
 
 
 @app.route('/', strict_slashes=False)
