@@ -7,13 +7,13 @@ from app.models.search import Search
 from app.models.github_data import GithubData
 from flask_login import current_user, login_user, login_required, logout_user
 from os import getenv
-from app.get_act_calendar import get_github_user_activity
-from app.get_user_info import get_github_user_info
-from app.get_repos import get_github_repositories_info
-from app.get_skills import get_github_user_skills
+from app.api_service.get_act_calendar import get_github_user_activity
+from app.api_service.get_user_info import get_github_user_info
+from app.api_service.get_repos import get_github_repositories_info
+from app.api_service.get_skills import get_github_user_skills
 import json
 
-    
+
 @app.route('/', strict_slashes=False)
 @app.route('/index', strict_slashes=False)
 def index():
