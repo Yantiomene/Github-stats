@@ -1,7 +1,7 @@
 """Defining routes"""
+import json
 from os import getenv
 
-import json
 from flask import render_template, flash, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 
@@ -10,10 +10,11 @@ from app.forms import RegistrationForm, LoginForm, SearchForm
 from app.models.user import User
 from app.models.search import Search
 from app.models.github_data import GithubData
-from app.api_service.get_act_calendar import get_github_user_activity
-from app.api_service.get_user_info import get_github_user_info
-from app.api_service.get_repos import get_github_repositories_info
-from app.api_service.get_skills import get_github_user_skills
+from app.github_api import GitHubUser
+from app.github_api.get_act_calendar import get_github_user_activity
+from app.github_api.get_user_info import get_github_user_info
+from app.github_api.get_repos import get_github_repositories_info
+from app.github_api.get_skills import get_github_user_skills
 
 
 @app.route('/', strict_slashes=False)
@@ -83,7 +84,7 @@ def search():
         return redirect(url_for('view_dashboard', username=gh_username))
 
     # Retrieve the 5 most recent searches for the current user
-    recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(5).all()
+    recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(6).all()
     
     return render_template('searches.html', title='Recent activities', form=form,
                            recent_searches=recent_searches, username=current_user.username)
