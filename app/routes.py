@@ -165,7 +165,7 @@ def save_search():
     """Route to handle saved searches"""
 
     data = request.get_json()
-    existing_search = Search.query.filter_by(gh_username=data['username']).first()
+    existing_search = Search.query.filter_by(user_id=current_user.id, gh_username=data['username']).first()
 
     if existing_search:
         return jsonify({'message': 'Snapshot not saved because it already exists'})
