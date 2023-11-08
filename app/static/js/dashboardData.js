@@ -33,12 +33,12 @@ function timeDeltaYMD(start_date, end_date) {
 function timeDeltaHM(start_date, end_date) {
     const startDate = new Date(start_date);
     const endDate = end_date ? new Date(end_date) : new Date();
-
+    
     const timeDiff = endDate - startDate;
     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + (days * 24);
     const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-
+    
     return `${hours} hrs, ${minutes} min`;
 }
 
@@ -138,6 +138,24 @@ function showLoadingMessage(element) {
     element.html('<p>Loading...</p>');
 }
 
+function saveSearch(snapshotData) {
+    $.ajax({
+        type: 'POST',
+        url: '/save_search',
+        data: JSON.stringify(snapshotData),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRFToken': $('#csrf_token').val(),
+        },
+        success: function (response) {
+            console.log('Success:', response);
+        },
+        error: function (error) {
+            console.log('Error:', error);
+        }
+    });
+}
+
 
 $(document).ready(function () {
     const username = $('#dashboard-page').data('username');
@@ -146,7 +164,7 @@ $(document).ready(function () {
     showLoadingMessage($('#repositories'));
     showLoadingMessage($('#events'));
  
-    // Fetch user data, repositories, and events concurrently
+    // Fetches user data, repositories, and events concurrently
     $.when(
         fetchData(`https://api.github.com/users/${username}`),
         fetchData(`https://api.github.com/users/${username}/repos`),
@@ -155,6 +173,17 @@ $(document).ready(function () {
         renderUserInfo(userData[0]);
         renderRepositories(reposData[0]);
         renderEvents(eventsData[0]);
+
+        // Create a snapshot of the user data
+        const snapshotData = {
+            username: userData[0].login,
+            avatar_url: userData[0].avatar_url,
+            repos_count: 1234, //reposData[0].length, // function to be implemented
+            commits_count: 4321, //eventsData[0].length, // function to be implemented
+        };
+        // Send the snapshot data to the backend
+        saveSearch(snapshotData);
+
     }).fail(function (error) {
         $('#dashboard-page').html('<p>Something went wrong. Please try again later.</p>')
         console.log('Error:', error);

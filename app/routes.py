@@ -2,7 +2,7 @@
 import json
 from os import getenv
 
-from flask import render_template, flash, redirect, url_for
+from flask import jsonify, render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 
 from app import app, db
@@ -83,7 +83,7 @@ def search():
         gh_username = form.gh_username.data
         return redirect(url_for('dashboard', username=gh_username))
 
-    # Retrieve the 5 most recent searches for the current user
+    # Retrieve the 6 most recent searches for the current user
     recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(6).all()
     
     return render_template('searches.html', title='Recent activities', form=form,
@@ -158,3 +158,31 @@ def view_dashboard(username):
     db.session.commit()
 
     return render_template('dashboard.html', username=username)
+
+
+@app.route('/save_search', methods=['POST'], strict_slashes=False)
+def save_search():
+    """Route to handle saved searches"""
+
+    data = request.get_json()
+    existing_search = Search.query.filter_by(gh_username=data['username']).first()
+
+    if existing_search:
+        return jsonify({'message': 'Snapshot not saved because it already exists'})
+
+    # Create a new instance of the Search model
+    new_search = Search(
+        user_id=current_user.id,
+        gh_username=data['username'],
+        avatar_url=data['avatar_url'],
+        commits_count=data['commits_count'],
+        repos_count=data['repos_count']
+    )
+
+    db.session.add(new_search)
+    try:
+        db.session.commit()
+        return jsonify({'message': 'Snapshot received and saved successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)})

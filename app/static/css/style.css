@@ -218,6 +218,8 @@ input[type="email"] {
   
 .nav-links {
     list-style: none;
+    margin: 0;
+    padding: 0;
     display: inline-flex;
     gap: 30px;
 }
@@ -462,6 +464,7 @@ ul.snapshot-card__text {
 }
 
 #landing-page, #dashboard-page, #search-page {
+  margin-top: calc(var(--header-height) + 10px);
   padding: 10px 80px;
   min-height: 80vh;
 }
@@ -471,7 +474,6 @@ ul.snapshot-card__text {
 
 /* FOR THE DASHBOARD PAGE */
 #dashboard-page {
-    margin-top: calc(var(--header-height) + 10px);
     display: flex;
     flex-direction: row;
     align-items: flex-start;
