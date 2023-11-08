@@ -81,13 +81,20 @@ def search():
     form = SearchForm()
     if form.validate_on_submit():
         gh_username = form.gh_username.data
-        return redirect(url_for('view_dashboard', username=gh_username))
+        return redirect(url_for('dashboard', username=gh_username))
 
     # Retrieve the 5 most recent searches for the current user
     recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(6).all()
     
     return render_template('searches.html', title='Recent activities', form=form,
                            recent_searches=recent_searches, username=current_user.username)
+
+
+@app.route('/view_dashboard/<username>', methods=['GET', 'POST'], strict_slashes=False)
+@login_required
+def dashboard(username):
+    form = SearchForm()
+    return render_template('dashboard.html', username=username, form=form)
 
 
 @app.route('/view_dashboard/<username>', methods=['GET', 'POST'], strict_slashes=False)

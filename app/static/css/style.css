@@ -10,6 +10,7 @@
   --dark-grey: #575757;
   --light-grey: #ccc;
   --black: #000;
+  --header-height: 80px;
 }
 
 body {
@@ -231,7 +232,9 @@ input[type="email"] {
 
 .nav-links .cta-stroked {
     color: var(--primary-color)!important;
-}.search-form {
+}
+
+.search-form {
     box-sizing: border-box;
     height: 50px;
     width: 500px;
@@ -249,6 +252,16 @@ input[type="email"] {
     outline: 1px solid var(--secondary-transparent);
     transition: all 0.2s ease;
 }
+
+.header .search-form{
+    left: 0;
+}
+
+/* header:focus-within {
+    width: 100%;
+    position: fixed;
+    top: 0;
+} */
 
 .search-form:focus-within {
     box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.2);
@@ -367,7 +380,9 @@ ul.snapshot-card__text {
     100% {
         outline-width: 6px
     }
-}.footer {
+}
+
+.footer {
     background-color: var(--black);
     color: var(--white);
     padding: 10px 80px;
@@ -376,9 +391,11 @@ ul.snapshot-card__text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}.header {
+}
+
+.header {
     width: 100%;
-    height: 80px;
+    height: var(--header-height);
     padding: 10px 80px;
     background-color: var(--white);
     border-bottom: 1px solid var(--grey);
@@ -387,9 +404,9 @@ ul.snapshot-card__text {
     justify-content: space-between;
     align-items: center;
 
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .banner {
@@ -423,7 +440,9 @@ ul.snapshot-card__text {
 
 .banner .button-cta:hover {
     color: var(--primary-color)!important;
-}#login-page {
+}
+
+#login-page {
     height: 100vh;
     display: flex;
 }
@@ -442,14 +461,136 @@ ul.snapshot-card__text {
     padding: 44px;
 }
 
-#landing-page {
+#landing-page, #dashboard-page, #search-page {
   padding: 10px 80px;
-  min-height: 40vh;
+  min-height: 80vh;
 }
-#search-page {
-    padding: 10px 80px;
-    min-height: 100vh;
+#landing-page {
+    min-height: 40vh;
 }
+
+/* FOR THE DASHBOARD PAGE */
+#dashboard-page {
+    margin-top: calc(var(--header-height) + 10px);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+
+    --user-info-card-width: 300px;
+}
+
+#user-info {
+    width: var(--user-info-card-width);
+    padding: 20px;
+    border-radius: 24px;
+    border: 1px solid var(--grey);
+    background-color: var(--white);
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+    flex-shrink: 0;
+}
+
+.profile-banner {
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 12px;
+}
+.profile-banner img{
+    border-radius: 100%;
+}
+#user-info h2 {
+    margin-bottom: 0;
+}
+#user-info .row {
+    margin-top: 10px;
+    padding: 0 10px;
+    border-radius: 12px;
+    background-color: var(--light-grey);
+}
+
+.stats-column {
+    width: calc(100% - var(--user-info-card-width));
+    padding: 20px;
+    border-radius: 24px;
+    border: 1px solid var(--grey);
+    background-color: var(--white);
+}
+
+.summary-section {
+    padding: 10px 5px;
+}
+
+.row {
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.row span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-width: 100px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--light-grey);
+    border-radius: 12px;
+}
+
+#trend-line-chart {
+    min-height: 350px;
+    width: 100%;
+    margin: 20px 0;
+    border: 2px solid var(--secondary-color); 
+}
+
+#repositories {
+    background-color: var(--white);
+}
+
+.table-view {
+    height: 500px;
+    overflow: auto;
+    border: 1px solid var(--dark-grey);
+}
+
+td,
+th {
+  border: 1px solid var(--dark-grey);
+  padding: 4px;
+}
+
+td {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: var(--grey);
+}
+
+th[scope="row"], thead tr {
+    position: sticky;
+    top: 2px;
+    left: 0;
+    z-index: 100;
+    background-color: var(--light-grey);
+}
+
+table {
+  border-collapse: collapse;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+}
+
+
+/* END OF DASHBOARD STYLES */
+
 
 div.welcome {
     background-color: var(--primary-color);

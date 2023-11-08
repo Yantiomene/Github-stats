@@ -1,7 +1,33 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% block content %}
-  <div id="dashboard">
-    <h2>Dashboard for {{ username }} </h2>
-    <!-- Add visualization graph and chart -->
+  <div id="dashboard-page" data-username={{username}}>
+      <div id="user-info"></div>
+
+      <div class="stats-column">
+
+        <div class="summary-section">
+          <div class="row">
+            <span>commits</span>
+            <span>repos</span>
+            <span id="years-active">years active</span>
+          </div>
+          <div id="trend-line-chart"> commits growth</div>
+          <div class="row">
+            <span>python</span>
+              <span>js</span>
+              <span>c++</span>
+              <span>c</span>
+          </div>
+        </div>
+        
+        <div id="repositories"></div>
+        
+        <div id="events"></div>
+      
+      </div>
+  
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="{{ url_for('static', filename='js/dashboardData.js') }}"></script>
+
   </div>
 {% endblock %}

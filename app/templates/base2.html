@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Your GitHub Stat Web Service</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <!-- NAV -->
+      <nav class="header">
+        <div class="logo">
+          <a href="{{ url_for('index') }}">
+            <img
+              src="{{ url_for('static', filename='images/ghs-logo.svg') }}"
+              alt="logo"
+              width="80"
+            />
+          </a>
+        </div>
+
+        <form method="POST" action="/search" class="search-form">
+            {{ form.hidden_tag() }}
+            {{ form.gh_username(class="search-input", placeholder="Enter a Github username") }}
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        <ul class="nav-links">
+          <li><a href="#">About</a></li>
+          {% if not current_user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('login') }}" class="button-cta cta-stroked"
+              >Sign in</a
+            >
+          </li>
+          <li>
+            <a href="{{ url_for('register') }}" class="button-cta">Sign up</a>
+          </li>
+          {% endif %} {% if current_user.is_authenticated %}
+          <li>
+            <a href="{{ url_for('logout') }}">Logout</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- END OF NAV -->
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div>
+      {% for category, message in messages %}
+      <p class="alert alert-{{ category }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %} {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>
+        Created with 💖 by <a href="https://github.com/Yantiomene">@Yaninthé</a>,
+        <a href="https://github.com/esmond-adjei">@esmond-adjei</a>,
+        <a href="https://github.com/GHMatrix">@GHMensah</a>
+      </p>
+      <span>© 2023 GitHub Stats</span>
+    </footer>
+    <!-- END OF FOOTER -->
+  </body>
+</html>
