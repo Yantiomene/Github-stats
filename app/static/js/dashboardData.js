@@ -128,7 +128,7 @@ function renderEvents(events_data) {
     const eventsHtml = `
         <h2>Events (${events_data.length}):</h2>
         <ul>
-            ${events_data.map(event => `<li>${event.type} at ${event.created_at} in ${event.repo.name}</li>`).join('')}
+            ${events_data.map(event => `<li>${event.type} at ${Date(event.created_at).toString()} in ${event.repo.name}</li>`).join('')}
         </ul>
     `;
     eventsElement.html(eventsHtml);

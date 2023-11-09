@@ -81,7 +81,7 @@ def search():
     form = SearchForm()
     if form.validate_on_submit():
         gh_username = form.gh_username.data
-        return redirect(url_for('dashboard', username=gh_username))
+        return redirect(url_for('view_dashboard', username=gh_username))
 
     # Retrieve the 6 most recent searches for the current user
     recent_searches = Search.query.filter_by(user_id=current_user.id).order_by(Search.timestamp.desc()).limit(6).all()
@@ -92,14 +92,14 @@ def search():
 
 @app.route('/view_dashboard/<username>', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
-def dashboard(username):
-    form = SearchForm()
+def view_dashboard(username):
+    form = SearchForm() # used by the search in the header of base2.html
     return render_template('dashboard.html', username=username, form=form)
 
 
-@app.route('/view_dashboard/<username>', methods=['GET', 'POST'], strict_slashes=False)
-@login_required
-def view_dashboard(username):
+# @app.route('/view_dashboard/<username>', methods=['GET', 'POST'], strict_slashes=False)
+# @login_required
+# def view_dashboard(username):
     #the data for this user should be query and store in the database
     #or to build the dashbord directly and serve it to the user.
     #a snap of the dashbord should be taken and saved in the searches table
