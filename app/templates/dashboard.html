@@ -7,8 +7,8 @@
 
         <div class="summary-section">
           <div class="row">
-            <span>commits</span>
-            <span>repos</span>
+            <span id="total-commits">commits</span>
+            <span id="total-repos">repos</span>
             <span id="years-active">years active</span>
           </div>
           <div id="trend-line-chart"> commits growth</div>
@@ -28,6 +28,7 @@
   
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="{{ url_for('static', filename='js/dashboardData.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/funct.js') }}"></script>
 
   </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 // Function to fetch data from the GitHub API
 function fetchData(url) {
-    const access_token = "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";  // Replace with your GitHub access token
+    const access_token = "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";  // Replace with your GitHub access token
 
     return $.ajax({
         url: url,
@@ -128,7 +128,7 @@ function renderEvents(events_data) {
     const eventsHtml = `
         <h2>Events (${events_data.length}):</h2>
         <ul>
-            ${events_data.map(event => `<li>${event.type} at ${Date(event.created_at).toString()} in ${event.repo.name}</li>`).join('')}
+            ${events_data.map(event => `<li>${event.type} at ${event.created_at} in ${event.repo.name}</li>`).join('')}
         </ul>
     `;
     eventsElement.html(eventsHtml);
@@ -156,7 +156,7 @@ function saveSearch(snapshotData) {
     });
 }
 
-
+// --------------------------------------------------
 $(document).ready(function () {
     const username = $('#dashboard-page').data('username');
     

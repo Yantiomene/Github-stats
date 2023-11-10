@@ -541,7 +541,8 @@ ul.snapshot-card__text {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--light-grey);
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     border-radius: 12px;
 }
 
@@ -557,7 +558,7 @@ ul.snapshot-card__text {
 }
 
 .table-view {
-    height: 500px;
+    max-height: 500px;
     overflow: auto;
     border: 1px solid var(--dark-grey);
 }
@@ -581,7 +582,8 @@ th[scope="row"], thead tr {
     top: 2px;
     left: 0;
     z-index: 100;
-    background-color: var(--light-grey);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 table {
