@@ -11,7 +11,9 @@
             <span id="total-repos">repos</span>
             <span id="years-active">years active</span>
           </div>
-          <div id="trend-line-chart"> commits growth</div>
+
+          <div id="trend-line-chart"></div>
+          
           <div class="row">
             <span>python</span>
               <span>js</span>
@@ -25,10 +27,15 @@
         <div id="events"></div>
       
       </div>
-  
+
+      <script src="https://d3js.org/d3.v5.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="{{ url_for('static', filename='js/dashboardData.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/funct.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/gql_queries.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/templates.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/graphql_dashboard.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/restful_dashboard.js') }}"></script>
 
   </div>
 {% endblock %}

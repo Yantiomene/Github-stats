@@ -70,7 +70,7 @@ h1 {
     border-radius: 10px;
     position: absolute;
     right: -500px;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: all 0.6s ease;
     animation: slide-from-left-to-right 10s ease;
 }
@@ -78,7 +78,7 @@ h1 {
 .alert-success {
     background-color: rgb(100, 200, 100);
 }
-.alert-fail {
+.alert-danger {
     background-color: rgb(200, 100, 100);
 }
 
@@ -88,18 +88,17 @@ h1 {
         right: -500px;
         opacity: 0;
     }
-    10% {
-        right: 0;
-        opacity: 80%;
-    }
-    50% {
+
+    30% {
         right: 50px;
         opacity: 100%;
     }
-    90% {
+    
+    70% {
         right: 50px;
         opacity: 100%;
     }
+    
     100% {
         right: -500px;
         opacity: 0%;
@@ -551,6 +550,11 @@ ul.snapshot-card__text {
     width: 100%;
     margin: 20px 0;
     border: 2px solid var(--secondary-color); 
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
 }
 
 #repositories {

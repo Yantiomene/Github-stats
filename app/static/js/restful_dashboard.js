@@ -1,12 +1,12 @@
 // Function to fetch data from the GitHub API
 function fetchData(url) {
-    const access_token = "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";  // Replace with your GitHub access token
+    const access_token = "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";  // Replace with your GitHub access token
 
     return $.ajax({
         url: url,
-        // headers: {
-        //     'Authorization': `Bearer ${access_token}`,
-        // },
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+        },
     });
 }
 
@@ -147,9 +147,6 @@ function saveSearch(snapshotData) {
         headers: {
             'X-CSRFToken': $('#csrf_token').val(),
         },
-        success: function (response) {
-            console.log('Success:', response);
-        },
         error: function (error) {
             console.log('Error:', error);
         }
@@ -167,12 +164,12 @@ $(document).ready(function () {
     // Fetches user data, repositories, and events concurrently
     $.when(
         fetchData(`https://api.github.com/users/${username}`),
-        fetchData(`https://api.github.com/users/${username}/repos`),
+        // fetchData(`https://api.github.com/users/${username}/repos`),
         fetchData(`https://api.github.com/users/${username}/events`)
     ).done(function (userData, reposData, eventsData) {
         renderUserInfo(userData[0]);
-        renderRepositories(reposData[0]);
-        renderEvents(eventsData[0]);
+        // renderRepositories(reposData[0]);
+        // renderEvents(eventsData[0]);
 
         // Create a snapshot of the user data
         const snapshotData = {
