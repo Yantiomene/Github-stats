@@ -1,15 +1,3 @@
-// Function to fetch data from the GitHub API
-function fetchData(url) {
-    const access_token = "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";  // Replace with your GitHub access token
-
-    return $.ajax({
-        url: url,
-        headers: {
-            'Authorization': `Bearer ${access_token}`,
-        },
-    });
-}
-
 
 // Function to calculate the years active
 function timeDeltaYMD(start_date, end_date) {
@@ -46,6 +34,12 @@ function timeDeltaHM(start_date, end_date) {
 // Function to render user info
 function renderUserInfo(user_data) {
     const userInfoElement = $('#user-info');
+
+    if (!user_data){
+        userInfoElement.html('No user info found');
+        return; 
+    }
+
     // Create and populate user info HTML
     const userHtml = `
         <div class='profile-banner'>
@@ -134,8 +128,8 @@ function renderEvents(events_data) {
     eventsElement.html(eventsHtml);
 }
 
-function showLoadingMessage(element) {
-    element.html('<p>Loading...</p>');
+function showLoadingMessage(element, message) {
+    element.html(`<p>${message}</p>`);
 }
 
 function saveSearch(snapshotData) {
@@ -157,19 +151,17 @@ function saveSearch(snapshotData) {
 $(document).ready(function () {
     const username = $('#dashboard-page').data('username');
     
-    showLoadingMessage($('#user-info'));
-    showLoadingMessage($('#repositories'));
-    showLoadingMessage($('#events'));
+    showLoadingMessage($('#user-info'), ('Loading user info...'));
+    showLoadingMessage($('#repositories'), ('Loading repositories'));
+    showLoadingMessage($('#events'), ('Loading events..'));
  
     // Fetches user data, repositories, and events concurrently
     $.when(
         fetchData(`https://api.github.com/users/${username}`),
-        // fetchData(`https://api.github.com/users/${username}/repos`),
         fetchData(`https://api.github.com/users/${username}/events`)
-    ).done(function (userData, reposData, eventsData) {
+    ).done(function (userData, eventsData) {
         renderUserInfo(userData[0]);
-        // renderRepositories(reposData[0]);
-        // renderEvents(eventsData[0]);
+        renderEvents(eventsData[0]);
 
         // Create a snapshot of the user data
         const snapshotData = {

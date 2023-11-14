@@ -1,24 +1,16 @@
 function drawTrendLine(data) {
     // Set up the SVG container
+    const svgWidth = 800;
+    const svgHeight = 400;
     var margin = { top: 20, right: 20, bottom: 30, left: 50 },
-        width = 600 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        width = svgWidth - margin.left - margin.right,
+        height = svgHeight - margin.top - margin.bottom;
 
     var svg = d3.select("#trend-line-chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // // Parse date strings into JavaScript Date objects
-    // var parseDate = d3.utcParse("%Y-%m-%dT");
-    // data.forEach(function (d) {
-    //     d.date = parseDate(d.date);
-    //     d.commits = +d.commits;
-    // });
-
-    // // Ensure data is ordered by date
-    // data.sort((a, b) => a.date - b.date);
 
     // Define scales
     var xScale = d3.scaleTime()
@@ -57,18 +49,47 @@ function drawTrendLine(data) {
         .call(d3.axisLeft(yScale));
 }
 
+function drawBarChart(data) {
+    
+    const svgWidth = 800;
+    const svgHeight = 400;
+    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const width = svgWidth - margin.left - margin.right;
+    const height = svgHeight - margin.top - margin.bottom;
 
-// --------------------------------------------------
-// Dummy data
-// var data = [
-//     { day: 1, commits: 5 },
-//     { day: 2, commits: 8 },
-//     { day: 3, commits: 12 },
-//     { day: 4, commits: 6 },
-//     { day: 5, commits: 10 },
-//     { day: 6, commits: 15 },
-// ];
+    const svg = d3.select("#bar-chart")
+        .append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// $(document).ready(function() {
-//     drawTrendLine(data);
-// });
+    // Create the X and Y scales
+    const xScale = d3.scaleBand()
+        .domain(Object.keys(data))
+        .range([0, width])
+        .padding(0.1);
+
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(Object.values(data))])
+        .range([height, 0]);
+
+    // Create the bars
+    svg.selectAll(".data-bar")
+        .data(Object.entries(data))
+        .enter().append("rect")
+        .attr("class", "data-bar")
+        .attr("x", d => xScale(d[0]))
+        .attr("width", xScale.bandwidth())
+        .attr("y", d => yScale(d[1]))
+        .attr("height", d => height - yScale(d[1]));
+
+    // Create X-axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale));
+
+    // Create Y-axis
+    svg.append("g")
+        .call(d3.axisLeft(yScale));
+}

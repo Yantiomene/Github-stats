@@ -1,62 +1,58 @@
 // ---------------- GRPAHQL QUERIES ------------------
 const username = $('#dashboard-page').data('username');
 
-// Define the GraphQL query
-// const contribQuery = `{
-//     user(login: "${username}") {
-//         contributionsCollection(from: "${startDateStr}", to: "${endDateStr}") {
-//             totalCommitContributions
-//             totalPullRequestContributions
-//             totalIssueContributions
-//             totalRepositoriesWithContributedCommits
-//             contributionCalendar {
-//                 totalContributions
-//                 weeks {
-//                     contributionDays {
-//                         weekday
-//                         date
-//                         contributionCount
-//                         color
-//                     }
-//                 }
-//                 months {
-//                     name
-//                     year
-//                     firstDay
-//                     totalWeeks
-//                 }
-//             }
-//         }
-//     }
-// }`;
+const languagesQuery = `{
+  user(login: "${username}") {
+    repositories(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+      nodes {
+        languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+          edges {
+            size
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}`
 
 const repoTableQuery = `{
-    user(login: "${username}") {
-      repositories(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
-        nodes {
+  user(login: "${username}") {
+    repositories(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
+      nodes {
+        name
+        description
+        createdAt
+        updatedAt
+        diskUsage
+        forkCount
+        stargazerCount
+        primaryLanguage {
           name
-          description
-          createdAt
-          updatedAt
-          diskUsage
-          forkCount
-          stargazerCount
-          primaryLanguage {
-            name
+        }
+        languages(first: 4, orderBy: {field: SIZE, direction: DESC}) {
+          edges {
+            size
+            node {
+              name
+            }
           }
-          defaultBranchRef {
-            target {
-              ... on Commit {
-                history {
-                  totalCount
-                }
+        }
+        defaultBranchRef {
+          target {
+            ... on Commit {
+              history {
+                totalCount
               }
             }
           }
         }
       }
     }
-  }`;
+  }
+}`
 
 const contribCalendarQuery = `{
     user(login: "${username}") {

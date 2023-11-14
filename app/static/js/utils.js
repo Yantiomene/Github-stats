@@ -1,8 +1,29 @@
+// DASHBOARD UTILITIES
+function fetchData(url) {
+    let access_token = localStorage.getItem('githubApiKey');
+    if (!access_token) {
+        access_token = prompt('Enter your GitHub API key:');
+        localStorage.setItem('githubApiKey', access_token);
+    }
+
+    return $.ajax({
+        url: url,
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+        },
+    });
+}
+
 function GQLFetch(graphqlQuery) {
 
-    const accessToken = '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';
+    let access_token = localStorage.getItem('githubApiKey');
+    if (!access_token) {
+        access_token = prompt('Enter your GitHub API key:');
+        localStorage.setItem('githubApiKey', access_token);
+    }
+
     const headers = {
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${access_token}`,
         'Content-Type': 'application/json',
     };
     const graphqlURL = 'https://api.github.com/graphql';
@@ -44,3 +65,30 @@ function parseContributionData(contribData) {
 
     return formattedData;
 }
+
+function groupAndSumLanguages(data) {
+
+    const languageCounts = {};
+    data.forEach((repository) => {
+        repository.languages.edges.forEach((language) => {
+            const languageName = language.node.name;
+            const size = language.size;
+            languageCounts[languageName] = (languageCounts[languageName] || 0) + size;
+        });
+    });
+
+    const languageArray = Object.entries(languageCounts);
+    const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]);
+    return Object.fromEntries(sortedLanguageArray);
+    // return sortedLanguageArray;
+
+}
+
+// BEHAVIORAL UTILITIES
+function showMenu() {
+    $('.user-icon').click(function () {
+        console.log('clicked!!');
+        $('.user-icon-detail').toggleClass('show');
+    });
+}
+$(document).ready(showMenu);

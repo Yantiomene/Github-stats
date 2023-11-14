@@ -6,6 +6,9 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
   </head>
   <body>
     <header>
@@ -39,9 +42,12 @@
             <a href="{{ url_for('register') }}" class="button-cta">Sign up</a>
           </li>
           {% endif %} {% if current_user.is_authenticated %}
-          <li>
-            <a href="{{ url_for('logout') }}">Logout</a>
-          </li>
+            <div class="user-icon"></div>
+            <li class="user-icon-detail">
+              <a href="{{ url_for('search') }}">history</a>
+              <a href="#">settings</a>
+              <a href="{{ url_for('logout') }}">Logout</a>
+            </li>
           {% endif %}
         </ul>
       </nav>

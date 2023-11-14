@@ -10,8 +10,11 @@ GQLFetch(repoTableQuery)
         if (QLResponse) {
             $('#total-repos').html(QLResponse.repositories.nodes.length + ' repos');
             QLrenderRepositories(QLResponse.repositories.nodes);
+
+            // QLResponse = groupAndSumLanguages(QLResponse.repositories.nodes);
+            // drawBarChart(QLResponse);
         } else {
-            console.log('No GitHub user activity information found.');
+            console.log('Failed to get repository information.');
         }
     });
 
@@ -24,7 +27,17 @@ GQLFetch(contribCalendarQuery)
             QLResponse = parseContributionData(QLResponse);
             drawTrendLine(QLResponse);
         } else {
-            console.log('No GitHub user activity information found.');
+            console.log('Failed to get calendar data');
         }
     });
 
+GQLFetch(languagesQuery)
+    .then(QLResponse => {
+        if (QLResponse) {
+            QLResponse = groupAndSumLanguages(QLResponse.repositories.nodes);
+            drawBarChart(QLResponse);
+            console.log(QLResponse);
+        } else {
+            console.log('Failed to get languages.')
+        }
+    })
