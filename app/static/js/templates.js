@@ -45,3 +45,12 @@ function QLrenderRepositories(repos_data) {
   }
 
 
+function renderSummary(targetSelector, value, valueDescription, tooltip) {
+    
+    if (!value) {value = ''}
+    if (!tooltip) { tooltip = valueDescription }
+    value = !value ? '' : `<h3>${value}</h3>` 
+    valueDescription = !valueDescription ? '' : `<p>${valueDescription}</p>`
+    const template = `${value}${valueDescription}`
+    $(targetSelector).html(template);
+}

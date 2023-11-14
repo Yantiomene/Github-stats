@@ -8,11 +8,8 @@
 GQLFetch(repoTableQuery)
     .then(QLResponse => {
         if (QLResponse) {
-            $('#total-repos').html(QLResponse.repositories.nodes.length + ' repos');
+            renderSummary('#total-repos', QLResponse.repositories.nodes.length, ' repos');
             QLrenderRepositories(QLResponse.repositories.nodes);
-
-            // QLResponse = groupAndSumLanguages(QLResponse.repositories.nodes);
-            // drawBarChart(QLResponse);
         } else {
             console.log('Failed to get repository information.');
         }
@@ -22,8 +19,7 @@ GQLFetch(repoTableQuery)
 GQLFetch(contribCalendarQuery)
     .then(QLResponse => {
         if (QLResponse) {
-            $('#total-commits').html(QLResponse.contributionsCollection.totalCommitContributions + ' commits');
-
+            renderSummary('#total-commits', QLResponse.contributionsCollection.totalCommitContributions, ' commits');
             QLResponse = parseContributionData(QLResponse);
             drawTrendLine(QLResponse);
         } else {
@@ -36,7 +32,6 @@ GQLFetch(languagesQuery)
         if (QLResponse) {
             QLResponse = groupAndSumLanguages(QLResponse.repositories.nodes);
             drawBarChart(QLResponse);
-            console.log(QLResponse);
         } else {
             console.log('Failed to get languages.')
         }

@@ -14,7 +14,7 @@ function timeDeltaYMD(start_date, end_date) {
       months -= 1;
     }
   
-    return `${years} yrs, ${months} mth, ${days} dys`;
+    return `${years}/${months}/${days}`;
 }
 
 // Function to calculate the time difference in days, hours, and minutes
@@ -62,7 +62,6 @@ function renderUserInfo(user_data) {
         </div>
     `;
     userInfoElement.html(userHtml);
-    $('#years-active').html(`${timeDeltaYMD(user_data.created_at)}`);
 }
 
 // Function to render repositories as a table
@@ -161,6 +160,7 @@ $(document).ready(function () {
         fetchData(`https://api.github.com/users/${username}/events`)
     ).done(function (userData, eventsData) {
         renderUserInfo(userData[0]);
+        renderSummary('#years-active', timeDeltaYMD(userData[0].created_at), 'yrs/mths/days');
         renderEvents(eventsData[0]);
 
         // Create a snapshot of the user data

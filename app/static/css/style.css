@@ -41,6 +41,12 @@ hr {
 h1 {
   margin: 0;
 }
+.button-cta:active,
+.button-toggle:active,
+.close-btn:active {
+    transition: all 0.3s ease;
+    transform: scale(0.98);
+}
 
 .button-cta {
   font-size: 1rem;
@@ -255,17 +261,25 @@ input[type="email"] {
 }
 
 .user-icon-detail {
-    display: none;
     width: 120px;
-    border: 1px solid var(--grey);
-    box-shadow: -5px 9px 16px -7px rgba(0,0,0,0.2);
-    border-radius: 8px;
-    position: absolute;
+    min-height: 30px;
+    display: none;
     top: calc( var(--header-height) - 10px);
     right: 50px;
+}
+
+.user-icon-detail,
+.row span::after,
+.tooltip {
+    position: absolute;
+    z-index: 100;
     padding: 10px;
     background-color: var(--white);
     color: var(--primary-color);
+    border: 1px solid var(--grey);
+    box-shadow: -5px 9px 16px -7px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    pointer-events: none;
 }
 
 .user-icon-detail a {
@@ -321,10 +335,7 @@ input[type="email"] {
     align-items: center;
     justify-content: center;
 }
-.close-btn:active{
-    transition: all 0.3s ease;
-    transform: scale(0.98);
-}
+
 /* ------------------------------------------------ */
 
 .nav-links a {
@@ -420,6 +431,7 @@ input[type="email"] {
 
 .snapshot-card__img-top {
     width: 100px;
+    height: 100px;
     border-radius: 100%;
     outline: 4px solid var(--secondary-transparent);
     border: 2px solid var(--secondary-color);
@@ -633,34 +645,75 @@ ul.snapshot-card__text {
     gap: 10px;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
 }
 
 .row span {
-    font-size: 1.2rem;
-    font-weight: bold;
+    position: relative;
     min-width: 100px;
-    padding: 25px;
+    max-width: 160px;
+    padding: 10px 20px;
     display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background-color: var(--secondary-color);
+    background-color: var(--grey);
     color: var(--primary-color);
     border-radius: 12px;
+}
+
+.row span h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.row span p {
+    margin: 0;
+    color: var(--dark-grey);
+}
+
+.row span::after {
+    width: max-content;
+    content: attr(data-tooltip);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.row span:hover::after {
+    opacity: 1;
 }
 
 #trend-line-chart {
     min-height: 350px;
     width: 100%;
     margin: 20px 0;
-    border: 2px solid var(--secondary-color); 
+    position: relative;
+    /* border: 2px solid var(--secondary-color);  */
 }
+/*----------- svg chart ---------------- */
 .line {
     fill: none;
-    stroke: steelblue;
+    stroke: var(--secondary-color);
     stroke-width: 2px;
 }
+
+.grid line {
+    stroke: var(--grey);
+    stroke-opacity: 0.5;
+    shape-rendering: crispEdges;
+  }
+
+.tooltip {
+    font-size: 12px;
+}
+  
+
+/* ------------------------------------- */
 
 #repositories {
     background-color: var(--white);

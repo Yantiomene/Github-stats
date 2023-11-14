@@ -74,8 +74,9 @@ function groupAndSumLanguages(data) {
         });
     });
 
+    
     const languageArray = Object.entries(languageCounts);
-    const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]);
+    const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]).slice(0, 10);
     return Object.fromEntries(sortedLanguageArray);
 }
 
@@ -89,6 +90,7 @@ function toggleDialog(triggerSelector, targetSelector) {
     });
 
     $target.click(function (event) {
+        console.log(event.target, $target)
         if (event.target === this) {
             $target.fadeOut();
         }
