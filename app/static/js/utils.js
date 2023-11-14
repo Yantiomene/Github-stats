@@ -77,24 +77,31 @@ function groupAndSumLanguages(data) {
     const languageArray = Object.entries(languageCounts);
     const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]);
     return Object.fromEntries(sortedLanguageArray);
-    // return sortedLanguageArray;
-
 }
 
 // BEHAVIORAL UTILITIES
-function showMenu(triggerSelector, objectSelector) {
-    $(triggerSelector).click(function () {
-        $(objectSelector).toggleClass('show');
+function toggleDialog(triggerSelector, targetSelector) {
+    const $trigger = $(triggerSelector);
+    const $target = $(targetSelector);
+
+    $trigger.click(function () {
+        $target.fadeToggle();
+    });
+
+    $target.click(function (event) {
+        if (event.target === this) {
+            $target.fadeOut();
+        }
     });
 }
 
-
 $(document).ready(function () {
-    showMenu('.user-icon', '.user-icon-detail');
-    showMenu('.settings', '#dialogOverlay');
-    showMenu('.close-btn', '#dialogOverlay');
-    showMenu('.overlay', '#dialogOverlay');
+    toggleDialog('.user-icon', '.user-icon-detail');
 
+    toggleDialog('.settings', '#dialogOverlay');
+    toggleDialog('.close-btn', '#dialogOverlay');
+
+    // set token
     $('#set-key').click(function (){
         const token = $('#token').val();
         localStorage.setItem('githubApiKey', token );
