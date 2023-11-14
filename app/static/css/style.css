@@ -33,6 +33,11 @@ a:hover {
   color: var(--primary-color);
 }
 
+hr {
+    margin: 0;
+    border: 1px solid var(--grey);
+}
+
 h1 {
   margin: 0;
 }
@@ -50,6 +55,13 @@ h1 {
 .button-cta:hover {
   background-color: var(--secondary-color);
   color: var(--white)!important;
+}
+
+.button-toggle {
+    padding: 6px 12px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    color: var(--grey)!important;
 }
 
 .inv {
@@ -133,6 +145,16 @@ div.auth-card {
     color: var(--dark-grey);
 }
 
+input[type='text'].inline-input {
+    height: 30px;
+    width: 60%;
+    margin: 0;
+    padding: 10px;
+    font-size: 12px;
+}
+input[type='text'].inline-input:focus-visible {
+    outline: 1px solid var(--secondary-color);
+}
 
 input[type="text"],
 input[type="password"],
@@ -261,6 +283,48 @@ input[type="email"] {
 .user-icon-detail.show {
     display: block !important;
 }
+
+/* ------------------ dialog popup -------------------- */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+.overlay.show {
+    display: flex;
+}
+
+.dialog {
+    width: 500px;
+    background: var(--white);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    cursor: pointer;
+    background-color: var(--grey);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    position: relative;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.close-btn:active{
+    transition: all 0.3s ease;
+    transform: scale(0.98);
+}
+/* ------------------------------------------------ */
 
 .nav-links a {
     color: var(--primary-color);
@@ -563,11 +627,12 @@ ul.snapshot-card__text {
 
 .row {
     height: 100%;
-    padding: 10px;
+    padding: 10px 0;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
 }
 

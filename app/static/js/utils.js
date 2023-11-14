@@ -5,7 +5,6 @@ function fetchData(url) {
         access_token = prompt('Enter your GitHub API key:');
         localStorage.setItem('githubApiKey', access_token);
     }
-
     return $.ajax({
         url: url,
         headers: {
@@ -15,13 +14,11 @@ function fetchData(url) {
 }
 
 function GQLFetch(graphqlQuery) {
-
     let access_token = localStorage.getItem('githubApiKey');
     if (!access_token) {
         access_token = prompt('Enter your GitHub API key:');
         localStorage.setItem('githubApiKey', access_token);
     }
-
     const headers = {
         'Authorization': `Bearer ${access_token}`,
         'Content-Type': 'application/json',
@@ -85,10 +82,25 @@ function groupAndSumLanguages(data) {
 }
 
 // BEHAVIORAL UTILITIES
-function showMenu() {
-    $('.user-icon').click(function () {
-        console.log('clicked!!');
-        $('.user-icon-detail').toggleClass('show');
+function showMenu(triggerSelector, objectSelector) {
+    $(triggerSelector).click(function () {
+        $(objectSelector).toggleClass('show');
     });
 }
-$(document).ready(showMenu);
+
+
+$(document).ready(function () {
+    showMenu('.user-icon', '.user-icon-detail');
+    showMenu('.settings', '#dialogOverlay');
+    showMenu('.close-btn', '#dialogOverlay');
+    showMenu('.overlay', '#dialogOverlay');
+
+    $('#set-key').click(function (){
+        const token = $('#token').val();
+        localStorage.setItem('githubApiKey', token );
+        $(this).css('background-color', 'green');
+        setTimeout(() => {
+            $(this).css('background-color', 'var(--primary-color)');
+        }, 10000);
+    });
+});

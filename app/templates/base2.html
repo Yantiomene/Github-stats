@@ -45,9 +45,36 @@
             <div class="user-icon"></div>
             <li class="user-icon-detail">
               <a href="{{ url_for('search') }}">history</a>
-              <a href="#">settings</a>
+              <a href="#" class="settings">settings</a>
               <a href="{{ url_for('logout') }}">Logout</a>
             </li>
+
+            <!-- Dialog -->
+            <div class="overlay" id="dialogOverlay">
+              <div class="dialog">
+                  <span class="close-btn">&times;</span>
+                  <h2>Settings</h2>
+                  <div class="row">
+                    <input type="text" placeholder="set GitHub token" class="inline-input" id="token"/>
+                    <a href="#" class="button-toggle" id="set-key">set token</a>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <p>Clear search history</p>
+                    <a href="#" class="button-toggle">clear</a>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <p>Change theme</p>
+                    <a href="#" class="button-toggle">dark mode</a>
+                  </div>
+                  <div class="row">
+                    <p>Delete account</p>
+                    <a href="#" class="button-toggle" style="background-color: darkred;">Delete</a>
+                  </div>
+              </div>
+            </div>
+
           {% endif %}
         </ul>
       </nav>
