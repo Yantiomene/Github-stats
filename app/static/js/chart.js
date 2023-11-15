@@ -1,8 +1,9 @@
 function drawTrendLine(data) {
+    d3.select("#trend-line-chart").select("svg").remove();
     // Set up the SVG container
     const svgWidth = 800;
     const svgHeight = 450;
-    var margin = { top: 20, right: 20, bottom: 30, left: 50 },
+    var margin = { top: 20, right: 50, bottom: 30, left: 50 },
         width = svgWidth - margin.left - margin.right,
         height = svgHeight - margin.top - margin.bottom;
 
@@ -69,7 +70,7 @@ function drawTrendLine(data) {
         .attr("r", 0)
         .attr("fill", "var(--secondary-color)")
         .style("stroke", "white")
-        .attr("opacity", 0.7)
+        .attr("opacity", 0)
         .style("pointer-events", "none");
 
     const listeningRect = svg.append("rect")
@@ -90,11 +91,12 @@ function drawTrendLine(data) {
         const yPos = yScale(d.commits / 1000); // Updated Y value to be in 'k'
 
         // Update the position of the circle (tooltip)
-        circle.attr("cx", xPos).attr("cy", yPos);
+        circle.attr("cx", xPos).attr("cy", yPos).attr("opacity", 1);
         tooltip
             .style("display", "block")
-            .style("left", `${xPos + 30}px`)
-            .style("top", `${yPos + 30}px`)
+            .style("opacity", 1)
+            .style("left", `${xPos + 10}px`)
+            .style("top", `${yPos + 10}px`)
             .html(`<strong>Date: </strong>${convertDate(d.date)}<br>
                    <strong>Contribution count: </strong>${d.commits}`);
     });

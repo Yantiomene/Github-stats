@@ -1,5 +1,5 @@
 // ---------------- GRPAHQL QUERIES ------------------
-const username = $('#dashboard-page').data('username');
+let username = $('#dashboard-page').data('username');
 
 const languagesQuery = `{
   user(login: "${username}") {

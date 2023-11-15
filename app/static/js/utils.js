@@ -1,5 +1,3 @@
-// DASHBOARD UTILITIES
-
 // API CALLS
 function fetchData(url) {
     let access_token = localStorage.getItem('githubApiKey');
@@ -83,7 +81,10 @@ function groupAndSumLanguages(data) {
     const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]).slice(0, 8);
     return Object.fromEntries(sortedLanguageArray);
 }
+// -------------------
 
+
+// TIME UTILITIES
 function convertDate(str) {
     const date = new Date(str);
     const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
@@ -105,8 +106,51 @@ function formatFileSize(bytes) {
     }  
     return `${bytes.toFixed(2)} ${units[i]}`;
 }
-// -----------------
 
+function timeDeltaYMD(start_date, end_date) {
+    // Function to calculate the years active
+    const startDate = new Date(start_date);
+    const endDate = end_date ? new Date(end_date) : new Date();
+  
+    const years = endDate.getFullYear() - startDate.getFullYear();
+    let months = endDate.getMonth() - startDate.getMonth();
+    let days = endDate.getDate() - startDate.getDate();
+  
+    // Adjust months if days are negative
+    if (days < 0) {
+      days += new Date(endDate.getFullYear(), endDate.getMonth() + 1, 0).getDate();
+      months -= 1;
+    }
+  
+    return `${years}/${months}/${days}`;
+}
+
+function timeDeltaHM(start_date, end_date) {
+    // Function to calculate the time difference in days, hours, and minutes
+    const startDate = new Date(start_date);
+    const endDate = end_date ? new Date(end_date) : new Date();
+    
+    const timeDiff = endDate - startDate;
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + (days * 24);
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    return `${hours} hrs, ${minutes} min`;
+}
+
+function daysAgo(n) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - n);
+    var year = currentDate.getFullYear();
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+    var day = String(currentDate.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}T00:00:00Z`;
+}
+// -------------------
+
+
+// BEHAVIORAL UTILITIES
 function createTooltip(containerSelector) {
     const tooltip = $('<div class="tooltip"></div>');
     $(containerSelector).append(tooltip);
@@ -129,8 +173,6 @@ function createTooltip(containerSelector) {
     };
 }
 
-
-// BEHAVIORAL UTILITIES
 function toggleDialog(triggerSelector, targetSelector) {
     const $trigger = $(triggerSelector);
     const $target = $(targetSelector);
@@ -146,10 +188,13 @@ function toggleDialog(triggerSelector, targetSelector) {
         }
     });
 }
+// -------------------
+
 
 $(document).ready(function () {
-    toggleDialog('.user-icon', '.user-icon-detail');
+    const username = $('#dashboard-page').data('username'); 
 
+    toggleDialog('.user-icon', '.user-icon-detail');
     toggleDialog('.settings', '#dialogOverlay');
     toggleDialog('.close-btn', '#dialogOverlay');
 
