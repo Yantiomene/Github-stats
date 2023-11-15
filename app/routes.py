@@ -1,6 +1,4 @@
 """Defining routes"""
-import json
-from os import getenv
 from datetime import datetime
 
 from flask import jsonify, render_template, flash, redirect, request, url_for
@@ -10,12 +8,6 @@ from app import app, db
 from app.forms import RegistrationForm, LoginForm, SearchForm
 from app.models.user import User
 from app.models.search import Search
-from app.models.github_data import GithubData
-from app.github_api import GitHubUser
-from app.github_api.get_act_calendar import get_github_user_activity
-from app.github_api.get_user_info import get_github_user_info
-from app.github_api.get_repos import get_github_repositories_info
-from app.github_api.get_skills import get_github_user_skills
 
 
 @app.route('/', strict_slashes=False)
