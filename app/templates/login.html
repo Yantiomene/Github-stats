@@ -2,18 +2,10 @@
 <html lang="en">
   <head>
     <title>Register | Your GitHub Stat Web Service</title>
-    <!-- <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    /> -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
-    <!-- Add CSS and other head content here -->
   </head>
   <body>
 
@@ -27,6 +19,16 @@
         </div>
 
         <div class='right-half'>
+
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %}
+                <div>
+                  {% for category, message in messages %}
+                  <p class="alert alert-{{ category }}">{{ message }}</p>
+                  {% endfor %}
+                </div>
+                {% endif %} {% endwith %} {% block content %}{% endblock %}
+            
 
             <div class="auth-card">
                 <h2>Sign in</h2>
