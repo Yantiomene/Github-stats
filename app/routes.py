@@ -1,6 +1,7 @@
 """Defining routes"""
 import json
 from os import getenv
+from datetime import datetime
 
 from flask import jsonify, render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
@@ -105,7 +106,11 @@ def save_search():
     existing_search = Search.query.filter_by(user_id=current_user.id, gh_username=data['username']).first()
 
     if existing_search:
-        return jsonify({'message': 'Snapshot not saved because it already exists'})
+        existing_search.commits_count = data['commits_count']
+        existing_search.repos_count = data['repos_count']
+        existing_search.timestamp = datetime.utcnow()
+        db.session.commit()
+        return jsonify({'message': 'Snapshot for user updated successfully'})
 
     # Create a new instance of the Search model
     print('data', data)

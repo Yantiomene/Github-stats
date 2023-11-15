@@ -333,6 +333,7 @@ input[type="email"] {
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 1000;
     background: rgba(0, 0, 0, 0.7);
 }
 .overlay.show {
@@ -348,6 +349,9 @@ input[type="email"] {
     position: relative;
     left: calc(0.5*(100% - 500px));
     top: 25%;
+}
+.dialog .row {
+    align-items: center;
 }
 
 .close-btn {
@@ -648,6 +652,7 @@ ul.snapshot-card__text {
     padding: 10px;
     border-radius: calc( var(--radius) - 4px);
     background-color: var(--grey);
+    overflow: hidden;
 }
 
 .stats-column {

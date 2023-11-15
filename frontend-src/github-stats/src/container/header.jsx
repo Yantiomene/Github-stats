@@ -9,7 +9,7 @@ const Header = () => {
         <h1>Get Deeper Insights About A Developer</h1>
         <p>A simple app to view Github user stats</p>
         <span className="cta">
-          <a href="/" className="button-cta cta-stroked">
+          <a href="#about" className="button-cta cta-stroked">
             Learn more
           </a>
           <a href="/sign-up" className="button-cta inv">

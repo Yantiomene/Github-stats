@@ -185,30 +185,26 @@ $(document).ready(function () {
     showLoadingMessage($('#repositories'), ('Loading repositories'));
     showLoadingMessage($('#events'), ('Loading events..'));
 
+    const snapshotData = {
+      username: '',
+      avatar_url: '',
+      commits_count: 0,
+      repos_count: 0
+    }
 
     // RESTFUL: Fetches user data, repositories, and events concurrently
     $.when(
         fetchData(`https://api.github.com/users/${username}`),
         fetchData(`https://api.github.com/users/${username}/events`),
-        
-        // GRAPHQL: Fetches repository, contributions, and languages data concurrently
-        fetchContribYTD(),
-        fetchRepoTable(),
         fetchLanguages(),
-    ).done(function (userData, eventsData, contribCount, repoCount) {
+    ).done(function (userData, eventsData) {
         renderUserInfo(userData[0]);
         renderSummary('#years-active', timeDeltaYMD(userData[0].created_at), 'yrs/mths/days');
         renderEvents(eventsData[0]);
 
-        // Create a snapshot of the user data
-        const snapshotData = {
-            username: userData[0].login,
-            avatar_url: userData[0].avatar_url,
-            commits_count: contribCount,
-            repos_count: repoCount,
-        };
-        console.log(snapshotData);
-        saveSearch(snapshotData);
+        snapshotData.username = userData[0].login;
+        snapshotData.avatar_url = userData[0].avatar_url;
+
     }).fail(function (error) {
         $('#dashboard-page').html(`
         <div class="hcc">
@@ -217,11 +213,24 @@ $(document).ready(function () {
         console.log('Error:', error);
     });
 
+            
+    // GRAPHQL: Fetches repository, contributions, and languages data concurrently
+    $.when(
+      fetchContribYTD().then(count => { snapshotData.commits_count = count }),
+      fetchRepoTable().then(count => { snapshotData.repos_count = count }),
+    ).done(() => {
+      // save search
+      console.log(snapshotData);
+      saveSearch(snapshotData);
+    }).fail((error) => {
+        console.log('Error:', error);
+    });
+
 
     // fetch contrib range on button click
     $('.button-fetch').click(function () {
         const range = $(this).data('range');
-        fetchContribRangeData(username, range);
+        fetchContribRangeData(range);
         $('.button-fetch').removeClass('current');
         $(this).addClass('current');
     });
