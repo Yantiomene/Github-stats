@@ -90,6 +90,11 @@ function convertDate(str) {
     return date.toLocaleDateString('en-US', options);
 }
 
+function formatTime(dateTime) {
+    const time = new Date(dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return time;
+}
+
 function formatFileSize(bytes) {
     if (bytes === 0) return "0 B";
     const units = ["B", "KB", "MB", "GB", "TB", "PB"];

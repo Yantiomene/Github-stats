@@ -117,13 +117,43 @@ function renderEvents(events_data) {
         return;
     }
 
+    const loadEvents = `
+        <div style='display: flex; justify-content: center; align-items: center'>
+            <span class='button-cta' id='loadEvents'> Load recent events for <em>${username}</em></span>
+        </div>
+    `
+    eventsElement.html(loadEvents);
+
+    // Grouping events by date
+    const groupedData = {};
+    events_data.forEach(item => {
+        const createdAtDate = convertDate(item.created_at)
+        if (!groupedData[createdAtDate]) {
+            groupedData[createdAtDate] = [];
+        }
+
+        groupedData[createdAtDate].push({
+            "created_at": item.created_at,
+            "event_type": item.type,
+            "reponame": item.repo.name,
+            // "message": item.payload?.commits[0].message ?? 'null',
+        });
+    });
     const eventsHtml = `
-        <h2>Events (${events_data.length}):</h2>
-        <ul>
-            ${events_data.map(event => `<li>${event.type} at ${event.created_at} in ${event.repo.name}</li>`).join('')}
-        </ul>
+        <h2>Events (${events_data.length})</h2>
+        ${Object.keys(groupedData).map(date => `
+            <h5>${date}</h5>
+            <ul>
+                ${groupedData[date].map(event => `
+                    <li><em>${formatTime(event.created_at)}: </em> ${event.event_type} in ${event.reponame}</li>
+                `).join('')}
+            </ul>
+        `).join('')}
     `;
-    eventsElement.html(eventsHtml);
+
+    $('#loadEvents').click(function () {
+        eventsElement.html(eventsHtml);
+    });
 }
 
 function showLoadingMessage(element, message) {
@@ -160,6 +190,7 @@ $(document).ready(function () {
     ).done(function (userData, eventsData) {
         renderUserInfo(userData[0]);
         renderSummary('#years-active', timeDeltaYMD(userData[0].created_at), 'yrs/mths/days');
+        console.log(eventsData[0]);
         renderEvents(eventsData[0]);
 
         // Create a snapshot of the user data

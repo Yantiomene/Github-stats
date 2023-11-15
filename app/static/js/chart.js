@@ -96,7 +96,7 @@ function drawTrendLine(data) {
             .style("left", `${xPos + 30}px`)
             .style("top", `${yPos + 30}px`)
             .html(`<strong>Date: </strong>${convertDate(d.date)}<br>
-                   <strong>Total Commits: </strong>${d.commits}`);
+                   <strong>Contribution count: </strong>${d.commits}`);
     });
 
     // Transition for the tooltip circle
@@ -116,7 +116,7 @@ function drawTrendLine(data) {
         .style("text-anchor", "middle")
         .style("font-size", "14px")
         .style("fill", "var(--dark-grey)")
-        .text("Total Commits (k)");
+        .text("Total Public Contributions Count (k)");
 
     // Add chart title
     svg.append("text")
@@ -125,7 +125,7 @@ function drawTrendLine(data) {
         .attr("text-anchor", "middle")
         .style("font-size", "18px")
         .style("fill", "#333")
-        .text("Commits Analysis");
+        .text("Contribution Analysis");
 }
 
 

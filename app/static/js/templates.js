@@ -10,7 +10,7 @@ function QLrenderRepositories(repos_data) {
     }
   
     const reposTable = `
-        <h2>Repositories (${repos_data.length}):</h2>
+        <h2>Repositories (${repos_data.length})</h2>
         <div class='table-view'>
         <table class="searchable sortable">
             <thead>
