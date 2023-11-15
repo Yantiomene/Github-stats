@@ -29,6 +29,7 @@ const repoTableQuery = `{
         diskUsage
         forkCount
         stargazerCount
+        isFork
         primaryLanguage {
           name
         }

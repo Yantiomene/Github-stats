@@ -1,5 +1,6 @@
 // ---------------- RENDER FUNCTIONS ------------------
 // Function to render repositories as a table
+const repoTooltip = createTooltip("#repositories");
 function QLrenderRepositories(repos_data) {
     const reposElement = $('#repositories');
     
@@ -16,6 +17,8 @@ function QLrenderRepositories(repos_data) {
                 <tr>
                     <th scope='row' style='text-align: left'>Name</th>
                     <th scope='row' style='text-align: left'>Description</th>
+                    <th scope='row' style='min-width: 100px'>created at</th>
+                    <th scope='row' style='min-width: 100px'>last updated</th>
                     <th scope='row' style='min-width: 100px'>Maintenance duration</th>
                     <th scope='row'>Commits</th>
                     <th scope='row'>Size</th>
@@ -27,8 +30,12 @@ function QLrenderRepositories(repos_data) {
             <tbody>
                 ${repos_data.map(repo => `
                     <tr>
-                        <td style='text-align: left'><a href='https://github.com/${username}/${repo.name}' target='_blank'>${repo.name}</a></td>
+                        <td style='text-align: left;'>
+                            <a style='color: ${repo.isFork? 'orange' : ''}' href='https://github.com/${username}/${repo.name}' target='_blank'>${repo.name}</a>
+                        </td>
                         <td style='text-align: left'>${repo.description}</td>
+                        <td>${convertDate(repo.createdAt)}</td>
+                        <td>${convertDate(repo.updatedAt)}</td>
                         <td>${timeDeltaHM(repo.createdAt, repo.updatedAt)}</td>
                         <td>${repo.defaultBranchRef?.target.history.totalCount ?? 'null'}</td>
                         <td>${repo.diskUsage}</td>

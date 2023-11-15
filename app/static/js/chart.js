@@ -1,7 +1,7 @@
 function drawTrendLine(data) {
     // Set up the SVG container
     const svgWidth = 800;
-    const svgHeight = 400;
+    const svgHeight = 450;
     var margin = { top: 20, right: 20, bottom: 30, left: 50 },
         width = svgWidth - margin.left - margin.right,
         height = svgHeight - margin.top - margin.bottom;
@@ -18,13 +18,13 @@ function drawTrendLine(data) {
         .range([0, width]);
 
     var yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, function (d) { return d.commits; }) + 100])
+        .domain([0, (d3.max(data, function (d) { return d.commits; }) * 1.10) / 1000]) // Updated Y-axis scale to display in 'k'
         .range([height, 0]);
 
     // Define the line
     var line = d3.line()
         .x(function (d) { return xScale(d.date); })
-        .y(function (d) { return yScale(d.commits); });
+        .y(function (d) { return yScale(d.commits / 1000); }); // Updated Y values to be in 'k'
 
     // Draw the trend line
     svg.append("path")
@@ -45,7 +45,7 @@ function drawTrendLine(data) {
         .attr("transform", "rotate(-45)");
 
     svg.append("g")
-        .call(d3.axisLeft(yScale))
+        .call(d3.axisLeft(yScale).tickFormat(d => d + 'k'))
         .selectAll("text")
         .style("font-size", "12px")
         .style("fill", "var(--dark-grey)");
@@ -55,11 +55,11 @@ function drawTrendLine(data) {
         .attr("class", "grid")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(xScale).tickSize(-height).tickFormat(""));
-  
+
     svg.append("g")
         .attr("class", "grid")
         .call(d3.axisLeft(yScale).tickSize(-width).tickFormat(""));
-    
+
     // CREATE TOOLTIP
     const tooltip = d3.select("#trend-line-chart")
         .append("div")
@@ -75,7 +75,7 @@ function drawTrendLine(data) {
     const listeningRect = svg.append("rect")
         .attr("width", width)
         .attr("height", height)
-        .style("opacity", 0)  // Make it invisible
+        .style("opacity", 0); // Make it invisible
 
     // Mousemove event on the listening rectangle
     listeningRect.on("mousemove", function (event) {
@@ -87,175 +87,110 @@ function drawTrendLine(data) {
         const d1 = data[i];
         const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
         const xPos = xScale(d.date);
-        const yPos = yScale(d.commits);
-        
+        const yPos = yScale(d.commits / 1000); // Updated Y value to be in 'k'
+
         // Update the position of the circle (tooltip)
         circle.attr("cx", xPos).attr("cy", yPos);
-
-        function convertDate(str){
-            const date = new Date(str);
-            const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
-        }
-
         tooltip
             .style("display", "block")
             .style("left", `${xPos + 30}px`)
             .style("top", `${yPos + 30}px`)
             .html(`<strong>Date: </strong>${convertDate(d.date)}<br>
-                   <strong>Commits: </strong>${d.commits}`)
+                   <strong>Total Commits: </strong>${d.commits}`);
     });
 
     // Transition for the tooltip circle
     circle.transition().duration(50).attr("r", 5);
-    
-    listeningRect.on("mouseleave",function (){
+
+    listeningRect.on("mouseleave", function () {
         // circle.transition().duration(50).attr("r", 0);
-        tooltip.style("display","none");
+        tooltip.style("display", "none");
     });
+
+    // Add Y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - height / 2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("fill", "var(--dark-grey)")
+        .text("Total Commits (k)");
+
+    // Add chart title
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "18px")
+        .style("fill", "#333")
+        .text("Commits Analysis");
 }
 
 
-// function drawBarChart(data) {
-    
-//     const svgWidth = 800;
-//     const svgHeight = 400;
-//     const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-//     const width = svgWidth - margin.left - margin.right;
-//     const height = svgHeight - margin.top - margin.bottom;
-
-//     const svg = d3.select("#bar-chart")
-//         .append("svg")
-//         .attr("width", svgWidth)
-//         .attr("height", svgHeight)
-//         .append("g")
-//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-//     // Create the X and Y scales
-//     const xScale = d3.scaleBand()
-//         .domain(Object.keys(data))
-//         .range([0, width])
-//         .padding(0.1);
-
-//     const yScale = d3.scaleLinear()
-//         .domain([0, d3.max(Object.values(data))])
-//         .range([height, 0]);
-
-//     // Create the bars
-//     svg.selectAll(".data-bar")
-//         .data(Object.entries(data))
-//         .enter().append("rect")
-//         .attr("class", "data-bar")
-//         .attr("x", d => xScale(d[0]))
-//         .attr("width", xScale.bandwidth())
-//         .attr("y", d => yScale(d[1]))
-//         .attr("height", d => height - yScale(d[1]));
-
-//     // Create X-axis
-//     svg.append("g")
-//         .attr("transform", `translate(0, ${height})`)
-//         .call(d3.axisBottom(xScale));
-
-//     // Create Y-axis
-//     svg.append("g")
-//         .call(d3.axisLeft(yScale));
-// }
-
-
 function drawBarChart(data) {
-    // Configure chart dimensions and margins
     const svgWidth = 800;
-    const svgHeight = 400;
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const svgHeight = 450;
+    const margin = { top: 50, right: 20, bottom: 50, left: 40 };
     const width = svgWidth - margin.left - margin.right;
     const height = svgHeight - margin.top - margin.bottom;
-  
-    // Create the SVG container and append a group for transformation
+
     const svg = d3.select("#bar-chart")
-      .append("svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
-      .append("g")
-      .attr("transform", `translate(${margin.left}, ${margin.top})`);
-  
-    // Define scales for X and Y axes
+        .append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Create the X and Y scales
     const xScale = d3.scaleBand()
-      .domain(Object.keys(data))
-      .range([0, width])
-      .padding(0.1);
-  
+        .domain(Object.keys(data))
+        .range([0, width])
+        .padding(0.1);
+
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(Object.values(data))])
-      .range([height, 0]);
-  
-    // Create rounded-corner bars with gradient fill
+        .domain([0, d3.max(Object.values(data)) * 1.10])
+        .range([height, 0]);
+
+    // Create the bars with some styling
+    const barChartTooltip = createTooltip("#bar-chart");
     svg.selectAll(".data-bar")
-      .data(Object.entries(data))
-      .enter()
-      .append("rect")
-      .attr("class", "data-bar")
-      .attr("rx", 4) // Rounded corners
-      .attr("ry", 4)
-      .attr("x", d => xScale(d[0]))
-      .attr("width", xScale.bandwidth())
-      .attr("y", d => yScale(d[1]))
-      .attr("height", d => height - yScale(d[1]))
-      .style("fill", (d, i) => `url(#gradient-${i + 1})`) // Apply gradient fill
-      .style("opacity", 0.8); // Subtle opacity
-  
-    // Define linear gradients for each bar with contrasting colors
-    const gradients = svg.append("defs");
-    gradients.selectAll("linearGradient")
-      .data(Object.entries(data))
-      .enter()
-      .append("linearGradient")
-      .attr("id", (d, i) => `gradient-${i + 1}`)
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 1)
-      .attr("y2", 0)
-      .selectAll("stop")
-      .data(d => d3.interpolateCoolWarm(0, 1)) // Color gradient
-      .enter()
-      .append("stop")
-      .attr("offset", d => d)
-      .attr("stop-color", d);
-  
-    // Enhance axis labels and ticks
+        .data(Object.entries(data))
+        .enter().append("rect")
+        .attr("class", "data-bar")
+        .attr("x", d => xScale(d[0]))
+        .attr("width", xScale.bandwidth())
+        .attr("y", d => yScale(d[1]))
+        .attr("rx", 8)
+        .attr("height", d => height - yScale(d[1])) 
+        .on("mouseover", (event, d) => barChartTooltip.show(event, `${d[0]}: ${formatFileSize(d[1])}`))
+        .on("mouseout", barChartTooltip.hide);
+
+    // Create X-axis with some styling
     svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale))
-      .selectAll("text") // Increase font size and weight
-      .style("font-size", "12px")
-      .style("font-weight", 600);
-  
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(xScale))
+        .selectAll("text")
+        .attr("dy", ".35em")
+        .style("text-anchor", "center")
+        .style("font-size", "12px")
+        .style("fill", "var(--dark-grey)");
+
+    // Create Y-axis with some styling and custom format
     svg.append("g")
-      .call(d3.axisLeft(yScale))
-      .selectAll("text")
-      .style("font-size", "12px")
-      .style("font-weight", 600);
-  
-    // Add faint grid lines
-    svg.selectAll(".grid-line")
-      .data(yScale.ticks(5)) // Five grid lines
-      .enter()
-      .append("line")
-      .attr("class", "grid-line")
-      .attr("y1", d => yScale(d))
-      .attr("y2", d => yScale(d))
-      .attr("x1", 0)
-      .attr("x2", width)
-      .style("stroke", "lightgray") // Subtle color
-      .style("stroke-width", 0.5);
-  
-    // Refine chart container
-    svg.style("background-color", "lightgray") // Subtle background
-      .style("padding", "10px"); // Subtle padding
-  
-    // Incorporate annotations and labels (optional)
-    // ...
-  
-    // Stylize data point labels (optional)
-    // ...
-  }
-  
+        .call(d3.axisLeft(yScale).tickFormat(d3.format(".2s")))
+        .selectAll("text")
+        .style("font-size", "12px")
+        .style("fill", "var(--dark-grey)");
+
+    // Add a title to the chart
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .style("fill", "var(--dark-grey)")
+        .text("Programming Languages Experience");
+}

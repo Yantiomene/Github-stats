@@ -1,4 +1,6 @@
 // DASHBOARD UTILITIES
+
+// API CALLS
 function fetchData(url) {
     let access_token = localStorage.getItem('githubApiKey');
     if (!access_token) {
@@ -45,7 +47,9 @@ function GQLFetch(graphqlQuery) {
         return null;
     });
 }
+// -------------------
 
+// PARSERS & FORMATTERS 
 function parseContributionData(contribData) {
     const contributionDays = contribData.contributionsCollection.contributionCalendar.weeks
         .flatMap(week => week.contributionDays);
@@ -76,9 +80,50 @@ function groupAndSumLanguages(data) {
 
     
     const languageArray = Object.entries(languageCounts);
-    const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const sortedLanguageArray = languageArray.sort((a, b) => b[1] - a[1]).slice(0, 8);
     return Object.fromEntries(sortedLanguageArray);
 }
+
+function convertDate(str) {
+    const date = new Date(str);
+    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return "0 B";
+    const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+    let i = 0;
+    while (bytes >= 1024) {
+      bytes /= 1024;
+      i++;
+    }  
+    return `${bytes.toFixed(2)} ${units[i]}`;
+}
+// -----------------
+
+function createTooltip(containerSelector) {
+    const tooltip = $('<div class="tooltip"></div>');
+    $(containerSelector).append(tooltip);
+    
+    function handleMouseOver(event, content) {
+        tooltip.css({
+            display: 'block',
+            opacity: 1,
+            left: event.pageX + 'px',
+            top: (event.pageY - 28) + 'px'
+        }).html(content);
+    }
+
+    function handleMouseOut() {
+        tooltip.css('opacity', 0);
+    }
+    return {
+        show: handleMouseOver,
+        hide: handleMouseOut
+    };
+}
+
 
 // BEHAVIORAL UTILITIES
 function toggleDialog(triggerSelector, targetSelector) {

@@ -272,7 +272,7 @@ input[type="email"] {
 .row span::after,
 .tooltip {
     position: absolute;
-    z-index: 100;
+    z-index: 1000;
     padding: 10px;
     background-color: var(--white);
     color: var(--primary-color);
@@ -711,7 +711,15 @@ ul.snapshot-card__text {
 .tooltip {
     font-size: 12px;
 }
-  
+
+.data-bar {
+    fill: var(--primary-color);
+}
+
+.data-bar:hover {
+    transition: all 0.3s ease;
+    fill: var(--secondary-color);
+}
 
 /* ------------------------------------- */
 

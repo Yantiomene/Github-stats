@@ -30,7 +30,6 @@ function timeDeltaHM(start_date, end_date) {
     return `${hours} hrs, ${minutes} min`;
 }
 
-
 // Function to render user info
 function renderUserInfo(user_data) {
     const userInfoElement = $('#user-info');
