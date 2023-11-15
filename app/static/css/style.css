@@ -279,7 +279,6 @@ input[type="email"] {
     border: 1px solid var(--grey);
     box-shadow: -5px 9px 16px -7px rgba(0,0,0,0.2);
     border-radius: 8px;
-    pointer-events: none;
 }
 
 .user-icon-detail a {
@@ -682,6 +681,7 @@ ul.snapshot-card__text {
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
+    pointer-events: none;
 }
 
 .row span:hover::after {
@@ -710,6 +710,7 @@ ul.snapshot-card__text {
 
 .tooltip {
     font-size: 12px;
+    pointer-events: none;
 }
 
 .data-bar {

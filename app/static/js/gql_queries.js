@@ -30,6 +30,7 @@ const repoTableQuery = `{
         forkCount
         stargazerCount
         isFork
+        url
         primaryLanguage {
           name
         }

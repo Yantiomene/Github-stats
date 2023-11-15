@@ -31,7 +31,13 @@ function QLrenderRepositories(repos_data) {
                 ${repos_data.map(repo => `
                     <tr>
                         <td style='text-align: left;'>
-                            <a style='color: ${repo.isFork? 'orange' : ''}' href='https://github.com/${username}/${repo.name}' target='_blank'>${repo.name}</a>
+                            <a 
+                                style='color: ${repo.isFork? 'orange' : ''}'
+                                href='${repo.url}'
+                                target='_blank'
+                            >
+                                ${repo.name}
+                            </a>
                         </td>
                         <td style='text-align: left'>${repo.description}</td>
                         <td>${convertDate(repo.createdAt)}</td>
